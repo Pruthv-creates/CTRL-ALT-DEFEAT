@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "299440538112",
+    "project_id": "virtual-herbal-garden-84939",
+    "storage_bucket": "virtual-herbal-garden-84939.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299440538112:android:3e3124f1a0cff5cd358ee5",
+        "android_client_info": {
+          "package_name": "com.example.virtual_herbal_garden"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWkHBKmc2vFv7hQK2uaIgbgEdFMBnYYEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
