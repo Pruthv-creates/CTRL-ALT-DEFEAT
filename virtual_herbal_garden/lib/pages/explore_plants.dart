@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:virtual_herbal_garden/models/plant.dart';
 import 'package:virtual_herbal_garden/database/services/plant_service.dart';
 import 'package:virtual_herbal_garden/components/my_plant_card.dart';
+import 'package:virtual_herbal_garden/pages/plant_details_page.dart';
 
 class ExplorePlantsPage extends StatefulWidget {
   const ExplorePlantsPage({super.key});
@@ -32,7 +33,6 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
       searchQuery = args.toLowerCase();
       _initialized = true;
     }
-    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +58,6 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
           SizedBox(
             height: 45,
             child: ListView.builder(
-              
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
               itemBuilder: (context, index) {
@@ -86,7 +85,6 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
             child: StreamBuilder<List<Plant>>(
               stream: _plantService.getPlants(),
               builder: (context, snapshot) {
-
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -98,7 +96,6 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
                 final plants = snapshot.data!;
 
                 final filteredPlants = plants.where((plant) {
-                  // 🔍 SEARCH FILTER
                   final query = searchQuery.toLowerCase();
 
                   final matchesSearch =
@@ -112,7 +109,6 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
                         (disease) => disease.toLowerCase().contains(query),
                       );
 
-                  // 🏷 CATEGORY FILTER
                   final matchesCategory =
                       selectedCategory == 'All' ||
                       plant.diseaseCategories.contains(selectedCategory);
@@ -134,7 +130,19 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
                   ),
                   itemCount: filteredPlants.length,
                   itemBuilder: (context, index) {
-                    return PlantCard(plant: filteredPlants[index]);
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PlantDetailsPage(
+                              plant: filteredPlants[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: PlantCard(plant: filteredPlants[index]),
+                    );
                   },
                 );
               },
@@ -142,7 +150,7 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
           ),
         ],
       ),
-
     );
   }
 }
+
