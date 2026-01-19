@@ -7,6 +7,7 @@ import 'package:virtual_herbal_garden/pages/home_page.dart';
 import 'package:virtual_herbal_garden/pages/profile_page.dart';
 import 'package:virtual_herbal_garden/theme/dark_mode.dart';
 import 'package:virtual_herbal_garden/theme/light_mode.dart';
+import 'package:virtual_herbal_garden/pages/explore_plants.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/login_or_register':(context) => const LoginOrRegister(),
         '/home_page':(context) => const HomePage(),
         '/profile_page':(context) =>const ProfilePage(),
+        '/explore_plants':(context) => const ExplorePlantsPage(),
 
       },
     );

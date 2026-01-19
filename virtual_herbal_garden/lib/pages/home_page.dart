@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:virtual_herbal_garden/theme/dark_mode.dart';
+import 'package:virtual_herbal_garden/theme/light_mode.dart';
+import 'package:virtual_herbal_garden/components/my_drawer.dart';
 import 'package:virtual_herbal_garden/screens/seed_data.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,6 +13,7 @@ class HomePage extends StatelessWidget {
     final colors = theme.colorScheme;
 
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: AppBar(
         title: const Text('Virtual Herbal Garden'),
         centerTitle: true,
@@ -54,11 +58,16 @@ class HomePage extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
-                ),
+                  ),
               ),
               onSubmitted: (query) {
-                // You can pass query later using arguments
-                Navigator.pushNamed(context, '/home_page');
+                if (query.trim().isEmpty) return;
+
+                Navigator.pushNamed(
+                context,
+                '/explore_plants',
+                arguments: query.trim(),
+                );
               },
             ),
 
@@ -72,7 +81,7 @@ class HomePage extends StatelessWidget {
                   icon: Icons.local_florist,
                   title: 'Explore Plants',
                   onTap: () {
-                    Navigator.pushNamed(context, '/home_page');
+                    Navigator.pushNamed(context, '/explore_plants');
                   },
                 ),
                 _featureCard(
@@ -118,12 +127,12 @@ class HomePage extends StatelessWidget {
             ),
           ElevatedButton(
           onPressed: () async {
-          await SeedDataService().addTulsi();
+          await SeedDataService().addPlants();
           ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Tulsi added to Firestore')),
+          const SnackBar(content: Text('Plants added to Firestore')),
     );
   },
-  child: const Text('Seed Tulsi (Admin)'),
+  child: Text('Seed Plants (Admin)',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),),
 ),
 
           ],

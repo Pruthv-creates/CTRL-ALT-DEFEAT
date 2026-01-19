@@ -29,7 +29,7 @@ class MyDrawer extends StatelessWidget {
               leading: Icon(Icons.home,
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
-              title: Text("M I N I M A L",
+              title: Text("Vir t u a l   G a r d e n",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.inversePrimary,
                 fontWeight: FontWeight.w600,
@@ -71,7 +71,7 @@ class MyDrawer extends StatelessWidget {
               leading: Icon(Icons.group,
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
-              title: Text("U S E R S",
+              title: Text("Explore Plants",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.inversePrimary,
                 fontWeight: FontWeight.w600,
@@ -82,7 +82,7 @@ class MyDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 //go to profile_page
 
-                Navigator.pushNamed(context, '/users_page');
+                Navigator.pushNamed(context, '/explore_plants');
               },
             ),
           ),

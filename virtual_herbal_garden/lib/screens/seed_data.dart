@@ -3,55 +3,63 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class SeedDataService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> addTulsi() async {
-    await _db.collection('plants').doc('tulsi').set({
-      "commonName": "Tulsi",
-      "botanicalName": "Ocimum sanctum",
-      "ayushSystems": ["Ayurveda", "Yoga"],
-
-      "description":
-          "Tulsi is a sacred medicinal plant widely used in Ayurveda for its healing properties.",
-
-      "medicinalProperties": [
-        "Immunity booster",
-        "Anti-inflammatory",
-        "Antioxidant"
-      ],
-
-      "therapeuticUses": [
-        "Cold and cough",
-        "Respiratory disorders",
-        "Stress relief"
-      ],
-
-      "precautions": [
-        "Avoid excessive consumption during pregnancy"
-      ],
-
-      "plantPartsUsed": ["Leaves", "Seeds"],
-
-      "diseaseCategories": [
-        "Respiratory",
-        "Immunity"
-      ],
-
-      "regionalOrigin": [
-        "India",
-        "Southeast Asia"
-      ],
-
-      "media": {
-        "images": [
-          "https://your-storage-url/tulsi_1.jpg"
+  Future<void> addPlants() async {
+    final plants = [
+      {
+        "commonName": "Ginger",
+        "botanicalName": "Zingiber officinale",
+        "ayushSystems": ["Ayurveda", "Unani"],
+        "medicinalProperties": [
+          "Anti-nausea",
+          "Anti-inflammatory",
+          "Digestive stimulant"
         ],
-        "videos": [],
-        "audio": [],
-        "model3D":
-            "https://your-storage-url/tulsi.glb"
+        "therapeuticUses": [
+          "Relieves nausea",
+          "Improves digestion",
+          "Reduces joint pain"
+        ],
+        "precautions": [
+          "Avoid excessive intake with blood thinners"
+        ],
+        "diseaseCategories": ["Digestive", "Respiratory"],
+        "plantPartsUsed": ["Rhizome"],
+        "model3D": "https://example.com/models/ginger.glb",
+        "images": [
+          "https://example.com/images/ginger1.jpg",
+          "https://example.com/images/ginger2.jpg"
+        ]
       },
+      {
+        "commonName": "Aloe Vera",
+        "botanicalName": "Aloe barbadensis miller",
+        "ayushSystems": ["Ayurveda", "Siddha"],
+        "medicinalProperties": [
+          "Anti-inflammatory",
+          "Cooling",
+          "Moisturizing"
+        ],
+        "therapeuticUses": [
+          "Soothes skin burns",
+          "Improves digestion",
+          "Promotes wound healing"
+        ],
+        "precautions": ["Avoid excessive oral consumption"],
+        "diseaseCategories": ["Skin", "Digestive"],
+        "plantPartsUsed": ["Gel"],
+        "model3D": "https://example.com/models/aloe_vera.glb",
+        "images": [
+          "https://example.com/images/aloe1.jpg",
+          "https://example.com/images/aloe2.jpg"
+        ]
+      }
+    ];
 
-      "createdAt": Timestamp.now(),
-      "updatedAt": Timestamp.now(),
-    });
+    for (final plant in plants) {
+      await _db
+          .collection('plants')
+          .doc(plant['commonName'].toString().toLowerCase())
+          .set(plant);
+    }
   }
 }
