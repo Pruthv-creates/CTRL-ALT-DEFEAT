@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { ArrowLeft, Play, Volume2, Bookmark, Share2 } from 'lucide-react';
+import BookmarkButton from '../components/BookmarkButton';
 
 const PlantDetail = () => {
     const { id } = useParams();
@@ -74,9 +75,7 @@ const PlantDetail = () => {
                     </div>
 
                     <div style={{ display: 'flex', gap: '15px', marginBottom: '40px' }}>
-                        <button className="btn btn-outline" style={{ gap: '8px' }}>
-                            <Bookmark size={18} /> Save
-                        </button>
+                        <BookmarkButton plantId={plant.id} />
                         <button className="btn btn-outline" style={{ gap: '8px' }}>
                             <Share2 size={18} /> Share
                         </button>

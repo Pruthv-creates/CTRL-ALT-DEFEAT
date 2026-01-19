@@ -23,7 +23,7 @@ const UserDashboard = () => {
     const fetchBookmarks = async () => {
       const uid = auth.currentUser?.uid;
       if (!uid) return;
-      const userDoc = await getDoc(doc(db, "users", uid));
+      const userDoc = await getDoc(doc(db, "Users", uid));
       setBookmarks(userDoc.data()?.bookmarks || []);
     };
     fetchBookmarks();
