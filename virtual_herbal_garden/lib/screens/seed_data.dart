@@ -511,17 +511,12 @@ class SeedDataService {
       }
     ];
     for (final plant in plants) {
-      final media = {
-        "images": plant['images'],
-        "model3D": plant['model3D']
-      };
+      final clean = Map<String, dynamic>.from(plant);
 
-      final clean = Map.of(plant);
-      clean.remove('images');
-      clean.remove('model3D');
-      clean['media'] = media;
-
-      final id = plant['commonName'].toString().toLowerCase().replaceAll(' ', '_');
+      final id = plant['commonName']
+          .toString()
+          .toLowerCase()
+          .replaceAll(' ', '_');
 
       await _db.collection('plants').doc(id).set(clean);
     }
