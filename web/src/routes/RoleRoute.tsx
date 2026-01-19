@@ -34,7 +34,7 @@ const RoleRoute = ({ element, requiredRole }: RoleRouteProps) => {
       if (!role) {
         const adminDoc = await getDoc(doc(db, "Admin", user.uid));
         if (adminDoc.exists()) {
-          role = "admin"; // or adminDoc.data()?.role if you store it
+          role = adminDoc.data()?.role; // or adminDoc.data()?.role if you store it
         }
       }
 
@@ -48,7 +48,11 @@ const RoleRoute = ({ element, requiredRole }: RoleRouteProps) => {
   }, [requiredRole]);
 
   if (status === "loading") return <div>Loading...</div>;
-  return status === "allowed" ? element : <Navigate to="/" />;
+  return status === "allowed" ? (
+    element
+  ) : (
+    <Navigate to={`/${requiredRole}-login`} />
+  );
 };
 
 export default RoleRoute;
