@@ -106,9 +106,9 @@ const Tours = () => {
                                 alignItems: 'center'
                             }}>
                                 <span style={{ fontWeight: '600', color: 'var(--color-primary)' }}>{tour.plantsCount} Plants</span>
-                                <button className="btn btn-primary" style={{ padding: '10px 24px' }}>
+                                <Link to={`/tours/${tour.id}`} className="btn btn-primary" style={{ padding: '10px 24px', textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
                                     Start Tour <ArrowRight size={18} style={{ marginLeft: '8px' }} />
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
