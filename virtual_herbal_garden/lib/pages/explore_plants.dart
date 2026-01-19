@@ -36,6 +36,7 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Explore Plants'),
       ),
       body: Column(
