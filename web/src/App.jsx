@@ -7,6 +7,7 @@ import ExplorePlants from "./pages/ExplorePlants";
 import PlantDetail from "./pages/PlantDetail";
 import Tours from "./pages/Tours";
 import TourDetail from "./pages/TourDetail";
+import Bookmarks from "./pages/Bookmarks";
 
 import AdminLoginPage from "./admin/AdminLoginPage";
 import AdminDashboard from "./admin/AdminDashboard";
@@ -27,6 +28,7 @@ function App() {
             {/* Public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<ProfileRedirect />} />
+            <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/explore" element={<ExplorePlants />} />
             <Route path="/plant/:id" element={<PlantDetail />} />
             <Route path="/tours" element={<Tours />} />
