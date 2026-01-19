@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Leaf, User } from 'lucide-react';
+import { Menu, X, Leaf, User, Bookmark } from 'lucide-react';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,16 +10,14 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
+    // Updated Navigation Links
     const navLinks = [
         { name: 'Home', path: '/' },
         { name: 'Explore Plants', path: '/explore' },
         { name: 'Tours', path: '/tours' },
-        { name: 'My Garden', path: '/profile' }, // Placeholder path for now
+        // "My Bookmarks" now has its own distinct path for saved plants
+        { name: 'My Bookmarks', path: '/bookmarks', icon: <Bookmark size={16} /> }, 
     ];
-
-    const isActive = (path) => {
-        return location.pathname === path ? 'color: var(--color-primary); font-weight: 700;' : '';
-    };
 
     return (
         <nav style={{
@@ -58,19 +56,47 @@ const Navbar = () => {
                             <Link
                                 to={link.path}
                                 style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
                                     color: location.pathname === link.path ? 'var(--color-primary)' : 'var(--color-text-dark)',
                                     fontWeight: location.pathname === link.path ? '700' : '500',
                                     fontSize: '0.95rem'
                                 }}
                             >
+                                {/* Show a small icon next to bookmarks if defined */}
+                                {link.icon && link.icon} 
                                 {link.name}
                             </Link>
                         </li>
                     ))}
+                    
+                    {/* Vertical Divider */}
+                    <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(0,0,0,0.1)' }}></div>
+
+                    {/* Profile / Admin Link */}
                     <li>
-                        <Link to="/profile" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <User size={20} color="var(--color-text-dark)" />
-                            <span style={{ display: 'none' }}>Profile</span>
+                        <Link 
+                            to="/profile" 
+                            title="User & Admin Profile"
+                            style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '5px' 
+                            }}
+                        >
+                            <div style={{
+                                padding: '8px',
+                                borderRadius: '50%',
+                                backgroundColor: location.pathname === '/profile' ? 'var(--color-primary)' : 'rgba(0,0,0,0.05)',
+                                color: location.pathname === '/profile' ? 'white' : 'var(--color-text-dark)',
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center',
+                                transition: 'all 0.3s ease'
+                            }}>
+                                <User size={20} />
+                            </div>
                         </Link>
                     </li>
                 </ul>
@@ -81,7 +107,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Dropdown (Simplified) */}
+            {/* Mobile Menu Dropdown */}
             {isOpen && (
                 <div style={{
                     position: 'absolute',
@@ -100,15 +126,35 @@ const Navbar = () => {
                                     to={link.path}
                                     onClick={() => setIsOpen(false)}
                                     style={{
-                                        display: 'block',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
                                         fontSize: '1.1rem',
                                         color: location.pathname === link.path ? 'var(--color-primary)' : 'var(--color-text-dark)',
                                     }}
                                 >
+                                    {link.icon}
                                     {link.name}
                                 </Link>
                             </li>
                         ))}
+                        <hr style={{ opacity: 0.1 }} />
+                        <li>
+                            <Link
+                                to="/profile"
+                                onClick={() => setIsOpen(false)}
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    fontSize: '1.1rem',
+                                    color: location.pathname === '/profile' ? 'var(--color-primary)' : 'var(--color-text-dark)',
+                                }}
+                            >
+                                <User size={20} />
+                                Profile / Admin
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             )}
