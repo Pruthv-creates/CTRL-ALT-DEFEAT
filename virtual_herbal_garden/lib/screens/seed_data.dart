@@ -522,4 +522,110 @@ class SeedDataService {
     }
   }
 }
+
+class GuidedTourSeeder {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> seedGuidedTours() async {
+    final tours = {
+      "immunity": {
+        "title": "Immunity Booster",
+        "description": "Plants that strengthen immunity and fight infections",
+        "plants": [
+          "Tulsi",
+          "Amla",
+          "Turmeric",
+          "Guduchi",
+          "Ashwagandha",
+          "Nilavembu",
+          "Lemon",
+          "Kutki"
+        ],
+      },
+      "digestion": {
+        "title": "Digestive Health",
+        "description": "Herbs that improve digestion and detoxification",
+        "plants": [
+          "Ginger",
+          "Fennel",
+          "Triphala",
+          "Haritaki",
+          "Senna",
+          "Aloe Vera",
+          "Lemon",
+          "Vidanga",
+          "Pippali"
+        ],
+      },
+      "respiratory": {
+        "title": "Respiratory Care",
+        "description": "Plants for cough, asthma, and lung health",
+        "plants": [
+          "Tulsi",
+          "Adathoda",
+          "Thuthuvalai",
+          "Yashtimadhu",
+          "Pippali",
+          "Ginger"
+        ],
+      },
+      "mental_health": {
+        "title": "Stress, Sleep & Mind",
+        "description": "Herbs for mental wellness and cognitive support",
+        "plants": [
+          "Ashwagandha",
+          "Brahmi",
+          "Shankhpushpi",
+          "Jatamansi",
+          "Nux vomica",
+          "Rose"
+        ],
+      },
+      "skin_care": {
+        "title": "Skin & Wound Healing",
+        "description": "Plants that heal skin and reduce inflammation",
+        "plants": [
+          "Neem",
+          "Aloe Vera",
+          "Calendula",
+          "Manjistha",
+          "Arnica",
+          "Rose"
+        ],
+      },
+      "pain_inflammation": {
+        "title": "Pain & Inflammation Relief",
+        "description": "Herbs for joint pain and inflammation",
+        "plants": [
+          "Turmeric",
+          "Guggul",
+          "Arnica",
+          "Ginger",
+          "Bala"
+        ],
+      },
+      "womens_health": {
+        "title": "Women’s & Hormonal Health",
+        "description": "Plants supporting reproductive and hormonal balance",
+        "plants": [
+          "Shatavari",
+          "Ashwagandha",
+          "Bala",
+          "Punarnava"
+        ],
+      },
+    };
+
+    for (final entry in tours.entries) {
+      await _firestore.collection("themes").doc(entry.key).set({
+        "title": entry.value["title"],
+        "description": entry.value["description"],
+        "plants": entry.value["plants"],
+        "createdAt": FieldValue.serverTimestamp(),
+      });
+    }
+  }
+}
+
+
       

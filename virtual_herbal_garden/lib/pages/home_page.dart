@@ -184,7 +184,9 @@ class _HomePageState extends State<HomePage>
                       title: 'Guided Tours',
                       subtitle: 'Learn by themes',
                       delay: 120,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/guided_tours');
+                      },
                     ),
                     _animatedFeatureCard(
                       context,
@@ -249,6 +251,15 @@ class _HomePageState extends State<HomePage>
                   },
                   child: const Text('Seed Plants (Admin)'),
                 ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await GuidedTourSeeder().seedGuidedTours();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Guided Tours Seeded")),
+                    );
+                  },
+                  child: const Text("Seed Guided Tours (Admin)"),
+                )
               ],
             ),
           ),
