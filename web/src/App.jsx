@@ -30,7 +30,6 @@ function App() {
 
             {/* User routes */}
             <Route path="/user-login" element={<UserLoginPage />} />
-            <Route path="/user-login" element={<UserLoginPage />} />
             <Route
               path="/user-dashboard"
               element={
@@ -39,7 +38,6 @@ function App() {
             />
 
             {/* Admin routes */}
-            <Route path="/admin-login" element={<AdminLoginPage />} />
             <Route path="/admin-login" element={<AdminLoginPage />} />
             <Route
               path="/admin-dashboard"
