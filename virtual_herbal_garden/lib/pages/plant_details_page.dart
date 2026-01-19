@@ -13,7 +13,7 @@ class PlantDetailsPage extends StatelessWidget {
       children: [
         Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        ...items.map((item) => Text("• $item")).toList(),
+        ...items.map((item) => Text("• $item")),
         const SizedBox(height: 12),
       ],
     );
