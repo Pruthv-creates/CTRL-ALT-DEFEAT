@@ -15,6 +15,7 @@ import 'package:virtual_herbal_garden/pages/bookmarks_page.dart';
 import 'package:virtual_herbal_garden/screens/identify_plant_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'screens/plant_details_wrapper.dart';
+import 'pages/cart_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/bookmarks_page': (context) => const BookmarksPage(),
         '/identify_plant': (context) => const IdentifyPlantScreen(),
         '/chat_page': (context) => const ChatbotPage(),
+        '/cart_page': (context) => const CartPage(),
 
       },
 

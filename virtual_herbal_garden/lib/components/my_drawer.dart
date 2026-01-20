@@ -106,6 +106,16 @@ class MyDrawer extends StatelessWidget {
 
             _drawerTile(
               context,
+              icon: Icons.shopping_cart,
+              title: 'Cart',
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/cart_page');
+              },
+            ),
+
+            _drawerTile(
+              context,
               icon: Icons.headset_mic_rounded,
               title: 'Chatbot',
               onTap: () {
