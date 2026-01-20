@@ -104,6 +104,16 @@ class MyDrawer extends StatelessWidget {
               },
             ),
 
+            _drawerTile(
+              context,
+              icon: Icons.headset_mic_rounded,
+              title: 'Chatbot',
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/chat_page');
+              },
+            ),
+
             const Spacer(),
 
             const Divider(thickness: 1),

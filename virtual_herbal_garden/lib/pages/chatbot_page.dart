@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:virtual_herbal_garden/services/chatbot_service.dart';
+import 'package:virtual_herbal_garden/database/services/chatbot_service.dart';
 import 'package:virtual_herbal_garden/models/plant.dart';
 import 'package:virtual_herbal_garden/pages/plant_details_page.dart';
 
@@ -178,7 +178,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
                   Text(
                     'Chatbot is thinking...',
                     style: TextStyle(
-                      color: colorScheme.primary,
+                      color: colorScheme.inversePrimary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -191,7 +191,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
               color: colorScheme.surface,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 4,
                   offset: const Offset(0, -2),
                 ),
@@ -286,7 +286,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
               style: TextStyle(
                 color: message.isUser
                     ? Colors.white
-                    : colorScheme.onPrimaryContainer,
+                    : colorScheme.inversePrimary,
                 fontSize: 14,
               ),
             ),
@@ -304,7 +304,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
                   decoration: BoxDecoration(
                     border: Border.all(color: colorScheme.primary),
                     borderRadius: BorderRadius.circular(12),
-                    color: colorScheme.primaryContainer.withOpacity(0.5),
+                    color: colorScheme.primaryContainer.withValues(alpha: 0.5),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

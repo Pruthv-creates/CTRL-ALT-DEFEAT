@@ -24,7 +24,6 @@ class _ExplorePlantsPageState extends State<ExplorePlantsPage> {
     'Digestive',
     'Skin',
     'Stress',
-    'Sleep disorders',
     'Anxiety',
   ];
 

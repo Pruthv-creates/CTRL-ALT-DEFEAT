@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PlantIdentificationService {
-  /// 🔑 Load API key from .env
+  ///  Load API key from .env
   final String _apiKey = dotenv.env['PLANTNET_API_KEY'] ?? '';
 
-  /// 🌿 Identify plant from image
+  /// Identify plant from image
   Future<String?> identifyPlant(File imageFile) async {
     if (_apiKey.isEmpty) {
       throw Exception('PLANTNET_API_KEY not found in .env');

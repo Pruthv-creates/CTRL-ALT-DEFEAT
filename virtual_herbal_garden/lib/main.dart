@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:virtual_herbal_garden/auth/auth.dart';
 import 'package:virtual_herbal_garden/auth/login_or_register.dart';
 import 'package:virtual_herbal_garden/firebase_options.dart';
+import 'package:virtual_herbal_garden/pages/chatbot_page.dart';
 import 'package:virtual_herbal_garden/pages/home_page.dart';
 import 'package:virtual_herbal_garden/pages/profile_page.dart';
 import 'package:virtual_herbal_garden/theme/dark_mode.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
         '/guided_tours': (context) => const GuidedToursPage(),
         '/guided_tour_detail': (context) => const GuidedTourDetailPage(),
         '/bookmarks_page': (context) => const BookmarksPage(),
-        '/identify_plant': (context) => const IdentifyPlantScreen(),    
+        '/identify_plant': (context) => const IdentifyPlantScreen(),
+        '/chat_page': (context) => const ChatbotPage(),
 
       },
 

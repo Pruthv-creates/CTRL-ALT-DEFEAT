@@ -73,9 +73,9 @@ class _HomePageState extends State<HomePage>
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.headset_mic_rounded),
             onPressed: () {
-              Navigator.pushNamed(context, '/profile_page');
+              Navigator.pushNamed(context, '/chat_page');
             },
           ),
         ],
