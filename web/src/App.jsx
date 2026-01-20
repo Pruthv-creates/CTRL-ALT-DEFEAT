@@ -9,6 +9,10 @@ import Tours from "./pages/Tours";
 import TourDetail from "./pages/TourDetail";
 import Bookmarks from "./pages/Bookmarks";
 import AddPlant from "./pages/AddPlant";
+import BuyPlants from "./pages/BuyPlants";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
 
 import AdminLoginPage from "./admin/AdminLoginPage";
 import AdminDashboard from "./admin/AdminDashboard";
@@ -16,48 +20,55 @@ import UserLoginPage from "./user/UserLoginPage";
 import UserDashboard from "./user/UserDashboard";
 import RoleRoute from "./routes/RoleRoute";
 import ProfileRedirect from "./components/ProfileRedirect";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
-    <Router>
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
-        <Navbar />
-        <main style={{ flex: 1, paddingBottom: "40px" }}>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<ProfileRedirect />} />
-            <Route path="/bookmarks" element={<Bookmarks />} />
-            <Route path="/explore" element={<ExplorePlants />} />
-            <Route path="/plant/:id" element={<PlantDetail />} />
-            <Route path="/tours" element={<Tours />} />
-            <Route path="/tours/:id" element={<TourDetail />} />
-            <Route path="/add-plant" element={<AddPlant />} />
+    <CartProvider>
+      <Router>
+        <div
+          style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+        >
+          <Navbar />
+          <main style={{ flex: 1, paddingBottom: "40px" }}>
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<ProfileRedirect />} />
+              <Route path="/bookmarks" element={<Bookmarks />} />
+              <Route path="/explore" element={<ExplorePlants />} />
+              <Route path="/plant/:id" element={<PlantDetail />} />
+              <Route path="/tours" element={<Tours />} />
+              <Route path="/tours/:id" element={<TourDetail />} />
+              <Route path="/add-plant" element={<AddPlant />} />
+              <Route path="/buy-plants" element={<BuyPlants />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/orders" element={<Orders />} />
 
-            {/* User routes */}
-            <Route path="/user-login" element={<UserLoginPage />} />
-            <Route
-              path="/user-dashboard"
-              element={
-                <RoleRoute element={<UserDashboard />} requiredRole="user" />
-              }
-            />
+              {/* User routes */}
+              <Route path="/user-login" element={<UserLoginPage />} />
+              <Route
+                path="/user-dashboard"
+                element={
+                  <RoleRoute element={<UserDashboard />} requiredRole="user" />
+                }
+              />
 
-            {/* Admin routes */}
-            <Route path="/admin-login" element={<AdminLoginPage />} />
-            <Route
-              path="/admin-dashboard"
-              element={
-                <RoleRoute element={<AdminDashboard />} requiredRole="admin" />
-              }
-            />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+              {/* Admin routes */}
+              <Route path="/admin-login" element={<AdminLoginPage />} />
+              <Route
+                path="/admin-dashboard"
+                element={
+                  <RoleRoute element={<AdminDashboard />} requiredRole="admin" />
+                }
+              />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 
