@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, Filter, X, PlusCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import PlantCard from '../components/PlantCard';
@@ -52,6 +53,7 @@ const ExplorePlants = () => {
         });
     };
 
+
     const filteredPlants = plants.filter(plant => {
         // Search
         const searchMatch =
@@ -59,21 +61,33 @@ const ExplorePlants = () => {
             plant.botanicalName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             plant.diseaseCategories?.some(d => d.toLowerCase().includes(searchTerm.toLowerCase()));
 
-        // Fitlers
+        // Health Category Filter (case-insensitive)
         const categoryMatch = filters.healthCategory.length === 0 ||
-            (plant.diseaseCategories && plant.diseaseCategories.some(c => filters.healthCategory.includes(c)));
+            (plant.diseaseCategories && plant.diseaseCategories.some(c =>
+                filters.healthCategory.some(filter =>
+                    c.toLowerCase().includes(filter.toLowerCase())
+                )
+            ));
 
-        // Note: Assuming 'ayushSystems' matches 'ayushSystem' filter key
+        // AYUSH System Filter (case-insensitive)
         const systemMatch = filters.ayushSystem.length === 0 ||
-            (plant.ayushSystems && plant.ayushSystems.some(s => filters.ayushSystem.includes(s)));
+            (plant.ayushSystems && plant.ayushSystems.some(s =>
+                filters.ayushSystem.some(filter =>
+                    s.toLowerCase().includes(filter.toLowerCase())
+                )
+            ));
 
-        // Note: Assuming 'usedParts' or similar matches 'plantPartUsed' - checking data structure might be needed.
-        // For now using a generic check or skipping if data field not known.
-        // Let's assume the field is 'partsUsed' or similar if it exists, otherwise ignore filter for now to avoid breaking.
-        // Checking previous App.jsx inspection, it had 'ayushSystems', 'diseaseCategories', 'medicinalProperties'.
-        // I'll stick to what I know exists for now or loosen the check.
+        // Plant Part Used Filter (case-insensitive)
+        // Check if plant has partsUsed, usedParts, or similar field
+        const plantParts = plant.partsUsed || plant.usedParts || plant.plantPartsUsed || [];
+        const partMatch = filters.plantPartUsed.length === 0 ||
+            (plantParts.length > 0 && plantParts.some(p =>
+                filters.plantPartUsed.some(filter =>
+                    p.toLowerCase().includes(filter.toLowerCase())
+                )
+            ));
 
-        return searchMatch && categoryMatch && systemMatch;
+        return searchMatch && categoryMatch && systemMatch && partMatch;
     });
 
     return (
@@ -90,6 +104,19 @@ const ExplorePlants = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
+                <Link
+                    to="/add-plant"
+                    className="btn btn-primary"
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        whiteSpace: 'nowrap'
+                    }}
+                >
+                    <PlusCircle size={20} />
+                    Contribute Plant
+                </Link>
                 <button
                     className="btn btn-outline mobile-only"
                     onClick={() => setShowMobileFilters(!showMobileFilters)}

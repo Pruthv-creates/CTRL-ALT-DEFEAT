@@ -17,7 +17,6 @@ const Navbar = () => {
         { name: 'Explore Plants', path: '/explore' },
         { name: 'Tours', path: '/tours' },
         { name: 'My Bookmarks', path: '/bookmarks', icon: <Bookmark size={16} /> },
-        { name: 'Contribute', path: '/add-plant', icon: <PlusCircle size={16} /> },
         { name: 'Buy Plants', path: '/buy-plants', icon: <ShoppingBag size={16} /> },
         { name: 'My Orders', path: '/orders', icon: <Package size={16} /> },
     ];
