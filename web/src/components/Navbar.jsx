@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Leaf, User, Bookmark, PlusCircle, ShoppingBag, Package } from 'lucide-react';
-import CartIcon from './CartIcon';
+import { Menu, X, Leaf, User, Bookmark, Store } from 'lucide-react';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +16,12 @@ const Navbar = () => {
         { name: 'Explore Plants', path: '/explore' },
         { name: 'Tours', path: '/tours' },
         { name: 'My Bookmarks', path: '/bookmarks', icon: <Bookmark size={16} /> },
-        { name: 'Buy Plants', path: '/buy-plants', icon: <ShoppingBag size={16} /> },
-        { name: 'My Orders', path: '/orders', icon: <Package size={16} /> },
+        { name: 'Marketplace', path: '/marketplace', icon: <Store size={16} /> },
     ];
 
     return (
         <nav style={{
-            backgroundColor: 'rgba(240, 234, 216, 0.95)',
+            backgroundColor: 'rgba(234, 221, 182, 0.95)',
             backdropFilter: 'blur(10px)',
             position: 'sticky',
             top: 0,
@@ -73,13 +71,6 @@ const Navbar = () => {
                         </li>
                     ))}
 
-                    {/* Vertical Divider */}
-                    <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(0,0,0,0.1)' }}></div>
-
-                    {/* Cart Icon */}
-                    <li>
-                        <CartIcon />
-                    </li>
 
                     {/* Profile / Admin Link */}
                     <li>

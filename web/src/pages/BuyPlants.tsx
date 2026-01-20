@@ -167,26 +167,9 @@ const BuyPlants = () => {
 
     return (
         <div className="min-h-screen bg-[#f0ead8]">
-            {/* Header / Hero Section */}
-            <div className="bg-[#1a4d2e] text-white pt-24 pb-12 px-6 rounded-b-[3rem] shadow-xl relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 pointer-events-none">
-                    <Leaf size={400} className="absolute -top-20 -right-20 rotate-12 text-white" />
-                    <ShoppingBag size={300} className="absolute bottom-0 -left-10 -rotate-12 text-white" />
-                </div>
-
-                <div className="container mx-auto text-center relative z-10">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4 drop-shadow-sm flex items-center justify-center gap-4">
-                        <ShoppingBag className="text-[#95d5b2]" size={48} />
-                        Herbal Marketplace
-                    </h1>
-                    <p className="text-[#b7e4c7] text-lg md:text-xl max-w-2xl mx-auto font-light">
-                        Bring nature home. Discover rare medicinal plants and seeds from our community growers.
-                    </p>
-                </div>
-            </div>
 
             {/* Search and Filter */}
-            <div className="container mx-auto px-4 -mt-8 relative z-20">
+            <div className="container mx-auto px-4 mt-8 relative z-20">
                 <div className="bg-white p-4 rounded-2xl shadow-lg flex flex-col md:flex-row items-center gap-4 max-w-4xl mx-auto">
                     <div className="relative flex-1 w-full">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
