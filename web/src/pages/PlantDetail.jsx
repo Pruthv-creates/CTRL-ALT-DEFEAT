@@ -6,6 +6,7 @@ import { ArrowLeft, Play, Volume2, Bookmark, Share2 } from 'lucide-react';
 import BookmarkButton from '../components/BookmarkButton';
 import PlantModel3D from '../components/PlantModel3D';
 import ImageSlideshow from '../components/ImageSlideshow';
+import AudioPlayer from '../components/AudioPlayer';
 
 const PlantDetail = () => {
     const { id } = useParams();
