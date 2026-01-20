@@ -197,16 +197,11 @@ const PlantDetail = () => {
                         </button>
                     </div>
 
-                    <div style={{ padding: '20px', backgroundColor: '#FFFDF5', border: '1px solid #EFEDDF', borderRadius: '12px' }}>
-                        <h4 style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <Volume2 size={20} color="var(--color-primary)" /> Audio Explanation
-                        </h4>
-                        <p style={{ fontSize: '0.9rem', color: '#666' }}>Listen to the traditional uses and pronunciation.</p>
-                        <div style={{ marginTop: '10px', height: '40px', backgroundColor: '#e0e0e0', borderRadius: '20px', display: 'flex', alignItems: 'center', padding: '0 15px' }}>
-                            <Play size={16} fill="black" />
-                            <div style={{ flex: 1, height: '4px', backgroundColor: '#ccc', marginLeft: '10px', borderRadius: '2px' }}></div>
-                        </div>
-                    </div>
+                    {/* Audio Player */}
+                    <AudioPlayer
+                        audioSrc={`/assets/audio/${id}.mp3`}
+                        plantName={plant.commonName}
+                    />
                 </div>
             </div>
 

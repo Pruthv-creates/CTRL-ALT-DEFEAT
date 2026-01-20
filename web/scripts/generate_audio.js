@@ -9,8 +9,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'pNInz6obpgDQGcFmaJgB'; // Default: Adam voice
+const GOOGLE_API_KEY = process.env.GOOGLE_CLOUD_TTS_API_KEY;
 
 // Paths
 const SUMMARIES_PATH = path.join(__dirname, 'plant_summaries.json');
@@ -24,43 +23,55 @@ if (!fs.existsSync(OUTPUT_DIR)) {
 async function generateAudio(plantId, text) {
     console.log(`Generating audio for: ${plantId}`);
 
-    const url = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`;
+    const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${GOOGLE_API_KEY}`;
+
+    const requestBody = {
+        input: { text: text },
+        voice: {
+            languageCode: 'en-US',
+            name: 'en-US-Neural2-J', // Male voice, professional tone
+            ssmlGender: 'MALE'
+        },
+        audioConfig: {
+            audioEncoding: 'MP3',
+            speakingRate: 0.95,
+            pitch: 0.0
+        }
+    };
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Accept': 'audio/mpeg',
-            'Content-Type': 'application/json',
-            'xi-api-key': ELEVENLABS_API_KEY
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            text: text,
-            model_id: 'eleven_monolingual_v1',
-            voice_settings: {
-                stability: 0.5,
-                similarity_boost: 0.75
-            }
-        })
+        body: JSON.stringify(requestBody)
     });
 
     if (!response.ok) {
         const error = await response.text();
-        throw new Error(`ElevenLabs API error: ${response.status} - ${error}`);
+        throw new Error(`Google Cloud TTS API error: ${response.status} - ${error}`);
     }
 
-    const audioBuffer = await response.arrayBuffer();
+    const result = await response.json();
+
+    if (!result.audioContent) {
+        throw new Error('No audio content in response');
+    }
+
+    // Decode base64 audio content
+    const audioBuffer = Buffer.from(result.audioContent, 'base64');
     const outputPath = path.join(OUTPUT_DIR, `${plantId}.mp3`);
 
-    fs.writeFileSync(outputPath, Buffer.from(audioBuffer));
+    fs.writeFileSync(outputPath, audioBuffer);
     console.log(`✓ Saved: ${plantId}.mp3`);
 
     return outputPath;
 }
 
 async function main() {
-    if (!ELEVENLABS_API_KEY) {
-        console.error('Error: ELEVENLABS_API_KEY not found in environment variables');
-        console.log('Please add ELEVENLABS_API_KEY to your .env file');
+    if (!GOOGLE_API_KEY) {
+        console.error('Error: GOOGLE_CLOUD_TTS_API_KEY not found in environment variables');
+        console.log('Please add GOOGLE_CLOUD_TTS_API_KEY to your .env file');
         process.exit(1);
     }
 
@@ -70,7 +81,7 @@ async function main() {
     const manifest = {};
     const plantIds = Object.keys(summaries);
 
-    console.log(`\nGenerating audio for ${plantIds.length} plants...\n`);
+    console.log(`\nGenerating audio for ${plantIds.length} plants using Google Cloud TTS...\n`);
 
     for (const plantId of plantIds) {
         try {
@@ -80,11 +91,12 @@ async function main() {
             manifest[plantId] = {
                 audioFile: `/assets/audio/${plantId}.mp3`,
                 script: text,
-                generatedAt: new Date().toISOString()
+                generatedAt: new Date().toISOString(),
+                service: 'Google Cloud TTS'
             };
 
-            // Rate limiting: wait 1 second between requests
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Rate limiting: wait 500ms between requests
+            await new Promise(resolve => setTimeout(resolve, 500));
 
         } catch (error) {
             console.error(`✗ Failed to generate audio for ${plantId}:`, error.message);
