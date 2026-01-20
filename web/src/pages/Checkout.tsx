@@ -6,7 +6,6 @@ import { collection, addDoc, doc, updateDoc, increment } from 'firebase/firestor
 import { QRCodeSVG } from 'qrcode.react';
 import {
     MapPin,
-    CreditCard,
     CheckCircle,
     ArrowLeft,
     ArrowRight,
@@ -17,6 +16,7 @@ import {
     Home,
     Smartphone
 } from 'lucide-react';
+import './Checkout.css';
 
 const Checkout = () => {
     const navigate = useNavigate();
@@ -25,8 +25,11 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false);
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [orderId, setOrderId] = useState('');
-    const [upiId, setUpiId] = useState('pruthvirajk2005@fam'); // Your UPI ID
+    const [upiId, setUpiId] = useState('pruthvirajk2005@fam');
     const [showQR, setShowQR] = useState(false);
+    const [transactionId, setTransactionId] = useState('');
+    const [paymentProof, setPaymentProof] = useState<File | null>(null);
+    const [proofPreview, setProofPreview] = useState<string | null>(null);
 
     const [shippingInfo, setShippingInfo] = useState({
         fullName: '',
@@ -37,7 +40,6 @@ const Checkout = () => {
         pincode: ''
     });
 
-    // Redirect if cart is empty
     if (cart.length === 0 && !orderPlaced) {
         navigate('/cart');
         return null;
@@ -61,16 +63,23 @@ const Checkout = () => {
     };
 
     const generateUpiLink = () => {
-        // Generate UPI payment link
         const params = new URLSearchParams({
-            pa: upiId, // Payee UPI ID
-            pn: 'Virtual Herbal Garden', // Payee name
-            am: total.toFixed(2), // Amount
-            cu: 'INR', // Currency
-            tn: `Order Payment - ${orderId}` // Transaction note
+            pa: upiId,
+            pn: 'Virtual Herbal Garden',
+            am: total.toFixed(2),
+            cu: 'INR',
+            tn: `Order Payment - ${orderId}`
         });
 
         return `upi://pay?${params.toString()}`;
+    };
+
+    const handlePaymentProofChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setPaymentProof(file);
+            setProofPreview(URL.createObjectURL(file));
+        }
     };
 
     const handlePayment = async () => {
@@ -84,7 +93,6 @@ const Checkout = () => {
         setLoading(true);
 
         try {
-            // Create order in Firestore first
             const orderData = {
                 userId: user.uid,
                 items: cart.map(item => ({
@@ -99,7 +107,7 @@ const Checkout = () => {
                 shipping: shipping,
                 tax: tax,
                 totalAmount: total,
-                status: 'pending',
+                status: 'pending_payment',
                 paymentMethod: 'UPI',
                 createdAt: new Date()
             };
@@ -108,34 +116,8 @@ const Checkout = () => {
             const generatedOrderId = orderRef.id;
             setOrderId(generatedOrderId);
 
-            // Show QR code
             setShowQR(true);
             setLoading(false);
-
-            // Auto-confirm after 10 seconds (in production, use payment webhook)
-            setTimeout(async () => {
-                try {
-                    // Update order status
-                    await updateDoc(doc(db, 'orders', generatedOrderId), {
-                        status: 'confirmed',
-                        paymentId: `UPI_${Date.now()}`
-                    });
-
-                    // Update stock for each item
-                    for (const item of cart) {
-                        const plantRef = doc(db, 'plants', item.id);
-                        await updateDoc(plantRef, {
-                            stock: increment(-item.quantity)
-                        });
-                    }
-
-                    // Clear cart
-                    clearCart();
-                    setOrderPlaced(true);
-                } catch (error) {
-                    console.error('Error updating order:', error);
-                }
-            }, 10000);
 
         } catch (error) {
             console.error('Payment error:', error);
@@ -144,28 +126,85 @@ const Checkout = () => {
         }
     };
 
-    // Order Success View
+    const handleSubmitProof = async () => {
+        const user = auth.currentUser;
+        if (!user) {
+            alert('Please login to continue');
+            return;
+        }
+
+        if (!transactionId.trim()) {
+            alert('Please enter the UPI transaction ID');
+            return;
+        }
+
+        if (!paymentProof) {
+            alert('Please upload payment proof screenshot');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // Upload payment proof to Firebase Storage
+            const { ref: storageRef, uploadBytes, getDownloadURL } = await import('firebase/storage');
+            const { storage } = await import('../firebase');
+
+            const proofRef = storageRef(storage, `payment-proofs/${orderId}_${Date.now()}.jpg`);
+            await uploadBytes(proofRef, paymentProof);
+            const proofUrl = await getDownloadURL(proofRef);
+
+            // Update order with payment verification details
+            await updateDoc(doc(db, 'orders', orderId), {
+                status: 'payment_submitted',
+                transactionId: transactionId,
+                paymentProofUrl: proofUrl,
+                paymentSubmittedAt: new Date()
+            });
+
+            // Update stock for each item
+            for (const item of cart) {
+                const plantRef = doc(db, 'plants', item.id);
+                await updateDoc(plantRef, {
+                    stock: increment(-item.quantity)
+                });
+            }
+
+            clearCart();
+            setOrderPlaced(true);
+            setLoading(false);
+
+        } catch (error) {
+            console.error('Error submitting payment proof:', error);
+            alert('Failed to submit payment proof. Please try again.');
+            setLoading(false);
+        }
+    };
+
     if (orderPlaced) {
         return (
-            <div className="min-h-screen bg-[#f0ead8] flex items-center justify-center p-6">
-                <div className="max-w-md w-full bg-white rounded-3xl p-8 shadow-xl text-center">
-                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle size={48} className="text-green-500" />
+            <div className="success-page">
+                <div className="success-card">
+                    <div className="success-icon">
+                        <CheckCircle size={48} />
                     </div>
-                    <h1 className="text-3xl font-bold text-[#1a4d2e] mb-4">Order Placed Successfully!</h1>
-                    <p className="text-gray-600 mb-2">Thank you for your purchase</p>
-                    <p className="text-sm text-gray-500 mb-8">Order ID: <span className="font-mono font-bold">{orderId}</span></p>
+                    <h1 className="checkout-title" style={{ fontSize: '28px', marginBottom: '16px' }}>Order Placed Successfully!</h1>
+                    <p style={{ color: '#6b7280', marginBottom: '8px' }}>Thank you for your purchase</p>
+                    <p style={{ fontSize: '14px', color: '#9ca3af', marginBottom: '32px' }}>
+                        Order ID: <span className="order-id">{orderId}</span>
+                    </p>
 
-                    <div className="space-y-3">
+                    <div className="action-buttons">
                         <button
                             onClick={() => navigate('/buy-plants')}
-                            className="w-full bg-[#1a4d2e] text-white py-3 rounded-xl hover:bg-[#143d23] transition-all font-bold"
+                            className="primary-btn"
+                            style={{ marginTop: 0 }}
                         >
                             Continue Shopping
                         </button>
                         <button
                             onClick={() => navigate('/')}
-                            className="w-full border-2 border-[#1a4d2e] text-[#1a4d2e] py-3 rounded-xl hover:bg-[#1a4d2e] hover:text-white transition-all font-bold"
+                            className="secondary-btn"
                         >
                             Go to Home
                         </button>
@@ -176,52 +215,50 @@ const Checkout = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f0ead8] py-12 px-4">
-            <div className="container mx-auto max-w-4xl">
+        <div className="checkout-page">
+            <div className="checkout-container">
                 {/* Header */}
-                <div className="mb-8">
+                <div className="checkout-header">
                     <button
                         onClick={() => step === 1 ? navigate('/cart') : setStep(step - 1)}
-                        className="flex items-center gap-2 text-[#1a4d2e] hover:underline mb-4"
+                        className="back-btn"
                     >
                         <ArrowLeft size={20} />
                         Back
                     </button>
-                    <h1 className="text-4xl font-bold text-[#1a4d2e]">Checkout</h1>
+                    <h1 className="checkout-title">Checkout</h1>
                 </div>
 
                 {/* Progress Steps */}
-                <div className="flex items-center justify-center mb-12">
-                    <div className="flex items-center gap-4">
-                        <div className={`flex items-center gap-2 ${step >= 1 ? 'text-[#1a4d2e]' : 'text-gray-400'}`}>
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-[#1a4d2e] text-white' : 'bg-gray-200'}`}>
+                <div className="steps-container">
+                    <div className="steps-wrapper">
+                        <div className={`step-item ${step >= 1 ? 'active' : ''}`}>
+                            <div className="step-circle">
                                 {step > 1 ? <CheckCircle size={20} /> : '1'}
                             </div>
-                            <span className="font-semibold hidden sm:block">Shipping</span>
+                            <span className="step-label">Shipping</span>
                         </div>
-                        <div className="w-16 h-1 bg-gray-200"></div>
-                        <div className={`flex items-center gap-2 ${step >= 2 ? 'text-[#1a4d2e]' : 'text-gray-400'}`}>
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-[#1a4d2e] text-white' : 'bg-gray-200'}`}>
-                                2
-                            </div>
-                            <span className="font-semibold hidden sm:block">Payment</span>
+                        <div className="step-line"></div>
+                        <div className={`step-item ${step >= 2 ? 'active' : ''}`}>
+                            <div className="step-circle">2</div>
+                            <span className="step-label">Payment</span>
                         </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="checkout-grid">
                     {/* Main Content */}
-                    <div className="lg:col-span-2">
+                    <div className="checkout-main">
                         {step === 1 && (
-                            <div className="bg-white rounded-2xl p-8 shadow-sm">
-                                <h2 className="text-2xl font-bold text-[#1a4d2e] mb-6 flex items-center gap-2">
+                            <div className="card">
+                                <h2 className="section-title">
                                     <MapPin size={24} />
                                     Shipping Address
                                 </h2>
-                                <div className="space-y-4">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            <User size={16} className="inline mr-1" />
+                                <div className="form-stack">
+                                    <div className="form-group">
+                                        <label className="form-label">
+                                            <User size={16} />
                                             Full Name *
                                         </label>
                                         <input
@@ -229,13 +266,13 @@ const Checkout = () => {
                                             name="fullName"
                                             value={shippingInfo.fullName}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1a4d2e] focus:outline-none transition-colors"
+                                            className="form-input"
                                             required
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            <Phone size={16} className="inline mr-1" />
+                                    <div className="form-group">
+                                        <label className="form-label">
+                                            <Phone size={16} />
                                             Phone Number *
                                         </label>
                                         <input
@@ -243,13 +280,13 @@ const Checkout = () => {
                                             name="phone"
                                             value={shippingInfo.phone}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1a4d2e] focus:outline-none transition-colors"
+                                            className="form-input"
                                             required
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            <Home size={16} className="inline mr-1" />
+                                    <div className="form-group">
+                                        <label className="form-label">
+                                            <Home size={16} />
                                             Address *
                                         </label>
                                         <input
@@ -257,42 +294,42 @@ const Checkout = () => {
                                             name="address"
                                             value={shippingInfo.address}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1a4d2e] focus:outline-none transition-colors"
+                                            className="form-input"
                                             required
                                         />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">City *</label>
+                                    <div className="form-row">
+                                        <div className="form-group">
+                                            <label className="form-label">City *</label>
                                             <input
                                                 type="text"
                                                 name="city"
                                                 value={shippingInfo.city}
                                                 onChange={handleInputChange}
-                                                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1a4d2e] focus:outline-none transition-colors"
+                                                className="form-input"
                                                 required
                                             />
                                         </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">State *</label>
+                                        <div className="form-group">
+                                            <label className="form-label">State *</label>
                                             <input
                                                 type="text"
                                                 name="state"
                                                 value={shippingInfo.state}
                                                 onChange={handleInputChange}
-                                                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1a4d2e] focus:outline-none transition-colors"
+                                                className="form-input"
                                                 required
                                             />
                                         </div>
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Pincode *</label>
+                                    <div className="form-group">
+                                        <label className="form-label">Pincode *</label>
                                         <input
                                             type="text"
                                             name="pincode"
                                             value={shippingInfo.pincode}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1a4d2e] focus:outline-none transition-colors"
+                                            className="form-input"
                                             required
                                         />
                                     </div>
@@ -300,7 +337,7 @@ const Checkout = () => {
                                 <button
                                     onClick={() => validateStep1() && setStep(2)}
                                     disabled={!validateStep1()}
-                                    className="w-full mt-6 bg-[#1a4d2e] text-white py-4 rounded-xl hover:bg-[#143d23] transition-all font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="primary-btn"
                                 >
                                     Continue to Payment
                                     <ArrowRight size={20} />
@@ -309,50 +346,44 @@ const Checkout = () => {
                         )}
 
                         {step === 2 && (
-                            <div className="bg-white rounded-2xl p-8 shadow-sm">
-                                <h2 className="text-2xl font-bold text-[#1a4d2e] mb-6 flex items-center gap-2">
+                            <div className="card">
+                                <h2 className="section-title">
                                     <Smartphone size={24} />
                                     UPI Payment
                                 </h2>
 
-                                {/* Order Review */}
-                                <div className="mb-6">
-                                    <h3 className="font-bold text-gray-700 mb-4">Order Items</h3>
-                                    <div className="space-y-3">
+                                <div className="order-review-section">
+                                    <h3 className="sub-title">Order Items</h3>
+                                    <div className="order-items-list">
                                         {cart.map(item => (
-                                            <div key={item.id} className="flex justify-between text-sm">
+                                            <div key={item.id} className="order-item-row">
                                                 <span>{item.commonName} x {item.quantity}</span>
-                                                <span className="font-semibold">₹{(item.price * item.quantity).toFixed(2)}</span>
+                                                <span style={{ fontWeight: 600 }}>₹{(item.price * item.quantity).toFixed(2)}</span>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
 
-                                {/* Shipping Address Review */}
-                                <div className="mb-6 p-4 bg-gray-50 rounded-xl">
-                                    <h3 className="font-bold text-gray-700 mb-2">Shipping To:</h3>
-                                    <p className="text-sm text-gray-600">
+                                <div className="shipping-review-section">
+                                    <h3 className="sub-title">Shipping To:</h3>
+                                    <div className="address-review">
                                         {shippingInfo.fullName}<br />
                                         {shippingInfo.phone}<br />
                                         {shippingInfo.address}<br />
                                         {shippingInfo.city}, {shippingInfo.state} - {shippingInfo.pincode}
-                                    </p>
+                                    </div>
                                 </div>
 
-                                {/* UPI ID Input */}
-                                <div className="mb-6">
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Merchant UPI ID
-                                    </label>
+                                <div className="form-group" style={{ marginBottom: '24px' }}>
+                                    <label className="form-label">Merchant UPI ID</label>
                                     <input
                                         type="text"
                                         value={upiId}
                                         onChange={(e) => setUpiId(e.target.value)}
-                                        placeholder="pruthvirajk2005@fam"
-                                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1a4d2e] focus:outline-none transition-colors"
+                                        className="form-input"
                                         disabled={showQR}
                                     />
-                                    <p className="text-xs text-gray-500 mt-2">
+                                    <p style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
                                         Payments will be sent to this UPI ID
                                     </p>
                                 </div>
@@ -362,7 +393,7 @@ const Checkout = () => {
                                         <button
                                             onClick={handlePayment}
                                             disabled={loading}
-                                            className="w-full bg-[#1a4d2e] text-white py-4 rounded-xl hover:bg-[#143d23] transition-all font-bold flex items-center justify-center gap-2 disabled:opacity-50"
+                                            className="primary-btn"
                                         >
                                             {loading ? (
                                                 <>
@@ -376,13 +407,13 @@ const Checkout = () => {
                                                 </>
                                             )}
                                         </button>
-                                        <p className="text-xs text-center text-gray-500 mt-4">
+                                        <p style={{ fontSize: '13px', textAlign: 'center', color: '#6b7280', marginTop: '16px' }}>
                                             Click to generate QR code for payment
                                         </p>
                                     </>
                                 ) : (
-                                    <div className="text-center">
-                                        <div className="bg-white p-6 rounded-2xl border-2 border-[#1a4d2e] mb-4 inline-block">
+                                    <div className="upi-section">
+                                        <div className="qr-container">
                                             <QRCodeSVG
                                                 value={generateUpiLink()}
                                                 size={200}
@@ -390,17 +421,83 @@ const Checkout = () => {
                                                 includeMargin={true}
                                             />
                                         </div>
-                                        <h3 className="font-bold text-lg text-[#1a4d2e] mb-2">Scan to Pay ₹{total.toFixed(2)}</h3>
-                                        <p className="text-sm text-gray-600 mb-4">
+                                        <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1a4d2e', marginBottom: '8px' }}>
+                                            Scan to Pay ₹{total.toFixed(2)}
+                                        </h3>
+                                        <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '24px' }}>
                                             Open any UPI app and scan this QR code to complete payment
                                         </p>
-                                        <div className="flex items-center justify-center gap-2 text-sm text-gray-500 mb-4">
-                                            <Loader className="animate-spin" size={16} />
-                                            <span>Waiting for payment confirmation...</span>
+
+                                        {/* Payment Verification Form */}
+                                        <div className="payment-verification-form">
+                                            <h3 className="sub-title" style={{ marginTop: '32px' }}>Submit Payment Proof</h3>
+
+                                            <div className="form-group">
+                                                <label className="form-label">UPI Transaction ID *</label>
+                                                <input
+                                                    type="text"
+                                                    value={transactionId}
+                                                    onChange={(e) => setTransactionId(e.target.value)}
+                                                    placeholder="e.g., 123456789012"
+                                                    className="form-input"
+                                                />
+                                                <p style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
+                                                    Enter the 12-digit transaction ID from your UPI app
+                                                </p>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label className="form-label">Payment Screenshot *</label>
+                                                <div className="proof-upload-container">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={handlePaymentProofChange}
+                                                        style={{ display: 'none' }}
+                                                        id="proof-upload"
+                                                    />
+                                                    <label htmlFor="proof-upload" className="upload-label">
+                                                        {proofPreview ? (
+                                                            <div className="proof-preview">
+                                                                <img src={proofPreview} alt="Payment proof" />
+                                                                <p style={{ marginTop: '8px', fontSize: '13px', color: '#1a4d2e' }}>
+                                                                    ✓ Screenshot uploaded - Click to change
+                                                                </p>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="upload-placeholder">
+                                                                <Package size={32} />
+                                                                <p style={{ marginTop: '8px', fontWeight: 600 }}>Upload Payment Screenshot</p>
+                                                                <p style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
+                                                                    Click to select image (JPG, PNG)
+                                                                </p>
+                                                            </div>
+                                                        )}
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <button
+                                                onClick={handleSubmitProof}
+                                                disabled={loading || !transactionId.trim() || !paymentProof}
+                                                className="primary-btn"
+                                            >
+                                                {loading ? (
+                                                    <>
+                                                        <Loader className="animate-spin" size={20} />
+                                                        Submitting...
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <CheckCircle size={20} />
+                                                        Submit Payment Proof
+                                                    </>
+                                                )}
+                                            </button>
+                                            <p style={{ fontSize: '12px', textAlign: 'center', color: '#9ca3af', marginTop: '12px' }}>
+                                                Your order will be confirmed after admin verification
+                                            </p>
                                         </div>
-                                        <p className="text-xs text-gray-400">
-                                            Payment will auto-confirm in 10 seconds for demo
-                                        </p>
                                     </div>
                                 )}
                             </div>
@@ -408,32 +505,30 @@ const Checkout = () => {
                     </div>
 
                     {/* Order Summary Sidebar */}
-                    <div className="lg:col-span-1">
-                        <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-6">
-                            <h2 className="text-xl font-bold text-[#1a4d2e] mb-6">Order Summary</h2>
-                            <div className="space-y-3 mb-6">
-                                <div className="flex justify-between text-gray-600">
+                    <div className="checkout-sidebar">
+                        <div className="card summary-card">
+                            <h2 className="section-title">Order Summary</h2>
+                            <div className="summary-content">
+                                <div className="summary-row">
                                     <span>Subtotal</span>
                                     <span>₹{subtotal.toFixed(2)}</span>
                                 </div>
-                                <div className="flex justify-between text-gray-600">
+                                <div className="summary-row">
                                     <span>Shipping</span>
                                     <span>{shipping === 0 ? 'FREE' : `₹${shipping.toFixed(2)}`}</span>
                                 </div>
-                                <div className="flex justify-between text-gray-600">
+                                <div className="summary-row">
                                     <span>Tax (GST 18%)</span>
                                     <span>₹{tax.toFixed(2)}</span>
                                 </div>
-                                <div className="border-t pt-3 flex justify-between text-lg font-bold text-[#1a4d2e]">
+                                <div className="summary-total">
                                     <span>Total</span>
                                     <span>₹{total.toFixed(2)}</span>
                                 </div>
                             </div>
-                            <div className="text-xs text-gray-500 space-y-2">
-                                <p className="flex items-center gap-2">
-                                    <Package size={14} />
-                                    {cart.length} item{cart.length > 1 ? 's' : ''} in cart
-                                </p>
+                            <div className="cart-info">
+                                <Package size={14} />
+                                {cart.length} item{cart.length > 1 ? 's' : ''} in cart
                             </div>
                         </div>
                     </div>
