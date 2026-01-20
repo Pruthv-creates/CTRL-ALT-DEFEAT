@@ -68,6 +68,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - .env
     - assets/3dModels/ginger.glb
     - assets/3dModels/licorice.glb
     - assets/3dModels/turmeric.glb
