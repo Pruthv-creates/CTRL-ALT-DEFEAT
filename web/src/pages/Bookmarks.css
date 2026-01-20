@@ -60,9 +60,16 @@
 }
 
 .btn-outline {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     border: 2px solid var(--color-primary);
     color: var(--color-primary);
     background: transparent;
+    padding: 14px 40px;
+    border-radius: 50px;
 }
 
 .btn-primary:hover,
