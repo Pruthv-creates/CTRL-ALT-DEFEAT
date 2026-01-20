@@ -4,37 +4,113 @@ ThemeData darkMode = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
 
-  scaffoldBackgroundColor: const Color.fromARGB(255, 31, 68, 44),
+ 
+  scaffoldBackgroundColor: const Color(0xFF0E1A14),
 
   colorScheme: const ColorScheme.dark(
-    surface: Color.fromARGB(255, 57, 79, 64),          // main surfaces
-    primary: Color.fromARGB(255, 81, 185, 124),           // herbal green (soft)
-    secondary: Color(0xFFCBBE7A),         // warm ayush accent
+    /// Base surfaces
+    surface: Color(0xFF1A2A22),
+    surfaceContainerHighest: Color(0xFF0E1A14),
+
+    /// Primary 
+    primary: Color(0xFF6FCF97),
+    primaryContainer: Color(0xFF2E5A43),
+
+    /// Secondary 
+    secondary: Color(0xFFD6C27A),
+    secondaryContainer: Color.fromARGB(255, 157, 144, 102),
+
+    /// Accent / contrast
     inversePrimary: Color(0xFFEAF7EE),
 
-    onSurface: Color(0xFFE5EEE9),
+    /// Text colors
     onPrimary: Color(0xFF0F1411),
     onSecondary: Color(0xFF1C1C1C),
+    onSurface: Color(0xFFE5EEE9),
+   
   ),
 
+  
+  textTheme: ThemeData.dark().textTheme.copyWith(
+        titleLarge: const TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFFEAF7EE),
+        ),
+        titleMedium: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFFDDEBE2),
+        ),
+        bodyLarge: const TextStyle(
+          fontSize: 16,
+          color: Color(0xFFE5EEE9),
+        ),
+        bodyMedium: const TextStyle(
+          fontSize: 14,
+          color: Color(0xFFD5E2DA),
+        ),
+        bodySmall: const TextStyle(
+          fontSize: 12,
+          color: Color(0xFF9FB6AA),
+        ),
+      ),
+
+ 
   appBarTheme: const AppBarTheme(
-    backgroundColor: Color(0xFF0F1411),
-    elevation: 0,
+    backgroundColor: Color(0xFF1A2A22),
+    foregroundColor: Color(0xFFEAF7EE),
+    elevation: 4,
     centerTitle: true,
   ),
 
-  cardTheme: CardThemeData(
-    color: const Color.fromARGB(255, 111, 136, 122),
-    elevation: 4,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
+  
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFF6FCF97),
+      foregroundColor: const Color(0xFF0F1411),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 14,
+      ),
     ),
   ),
 
-  drawerTheme: const DrawerThemeData(
-    backgroundColor: Color(0xFF161C18),
+  
+  cardTheme: CardThemeData(
+    color: const Color(0xFF24382F),
+    elevation: 6,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+    ),
   ),
 
+  
+  chipTheme: ChipThemeData(
+    backgroundColor: const Color(0xFF2E5A43),
+    selectedColor: const Color(0xFF6FCF97),
+    labelStyle: const TextStyle(color: Color(0xFFEAF7EE)),
+    secondaryLabelStyle: const TextStyle(color: Color(0xFF0F1411)),
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+
+ 
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: const Color(0xFF24382F),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(14),
+      borderSide: BorderSide.none,
+    ),
+  ),
+
+  
   listTileTheme: const ListTileThemeData(
     iconColor: Color(0xFFEAF7EE),
     textColor: Color(0xFFEAF7EE),
@@ -44,13 +120,14 @@ ThemeData darkMode = ThemeData(
     color: Color(0xFFEAF7EE),
   ),
 
+ 
   dividerTheme: DividerThemeData(
     color: Colors.grey.shade700,
     thickness: 0.6,
   ),
 
-  textTheme: ThemeData.dark().textTheme.apply(
-    bodyColor: const Color(0xFFE5EEE9),
-    displayColor: Colors.white,
+ 
+  drawerTheme: const DrawerThemeData(
+    backgroundColor: Color(0xFF121F19),
   ),
 );
