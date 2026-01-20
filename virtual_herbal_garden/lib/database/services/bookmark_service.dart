@@ -2,28 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class BookmarkService {
-  final _db = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  String get _uid => _auth.currentUser!.uid;
-
-  DocumentReference get _userRef =>
-      _db.collection('users').doc(_uid);
-
-  /// Stream of bookmarked plant IDs
   Stream<List<String>> bookmarkIdsStream() {
-    return _userRef.snapshots().map((doc) {
-      final data = doc.data() as Map<String, dynamic>? ?? {};
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    return _firestore.collection('Users').doc(uid).snapshots().map((snap) {
+      final data = snap.data();
+      if (data == null) return [];
       return List<String>.from(data['bookmarks'] ?? []);
     });
   }
 
-  /// Toggle bookmark
   Future<void> toggleBookmark(String plantId, bool isBookmarked) async {
-    await _userRef.update({
-      'bookmarks': isBookmarked
-          ? FieldValue.arrayRemove([plantId])
-          : FieldValue.arrayUnion([plantId])
-    });
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final doc = _firestore.collection('Users').doc(uid);
+
+    if (isBookmarked) {
+      await doc.update({
+        'bookmarks': FieldValue.arrayRemove([plantId]),
+      });
+    } else {
+      await doc.update({
+        'bookmarks': FieldValue.arrayUnion([plantId]),
+      });
+    }
   }
 }

@@ -31,11 +31,10 @@ class PlantListScreen extends StatelessWidget {
                 itemCount: plants.length,
                 itemBuilder: (context, index) {
                   final plant = plants[index];
-                  final isBookmarked =
-                      bookmarks.contains(plant.id);
+                  final isBookmarked = bookmarks.contains(plant.id);
 
                   return ListTile(
-                    leading: Image.asset(
+                    leading: Image.network(
                       plant.images.first,
                       width: 50,
                       fit: BoxFit.cover,
@@ -49,9 +48,7 @@ class PlantListScreen extends StatelessWidget {
                         isBookmarked
                             ? Icons.bookmark
                             : Icons.bookmark_border,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       onPressed: () async {
                         await _bookmarkService.toggleBookmark(
@@ -66,7 +63,7 @@ class PlantListScreen extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         '/plant_detail',
-                        arguments: plant.id,
+                        arguments: plant, // Pass Plant object
                       );
                     },
 
@@ -84,8 +81,7 @@ class PlantListScreen extends StatelessWidget {
                                 ? 'Bookmark removed'
                                 : 'Bookmark saved!',
                           ),
-                          duration:
-                              const Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                         ),
                       );
                     },
