@@ -58,14 +58,12 @@ const Bookmarks = () => {
 
     if (!user) {
         return (
-            <div className="section container login-required flex items-center">
-                <div>
-                    <Bookmark size={48} className="bookmark-icon flex items-center" />
+            <div className="section container login-required flex flex-col items-center justify-center min-h-[50vh] gap-4">
+                <div className="flex items-center gap-3">
+                    <Bookmark size={48} className="bookmark-icon" />
+                    <h2 className="m-0">Please Log In</h2>
                 </div>
-                <div>
-                    <h2>Please Log In</h2>
-                </div>
-                <p>You need to be logged in to view your saved plants.</p>
+                <p className="text-center">You need to be logged in to view your saved plants.</p>
                 <Link to="/user-login" className="btn btn-primary">
                     Login Now
                 </Link>

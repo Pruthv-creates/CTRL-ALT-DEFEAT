@@ -12,7 +12,7 @@
 .login-bg {
   position: absolute;
   inset: 0;
-  background-image: url("https://images.unsplash.com/photo-1466781783364-36c955e42a7f?q=80&w=1920&auto=format&fit=crop");
+  background-image: url("../assets/nature.gif");
   background-size: cover;
   background-position: center;
 }
