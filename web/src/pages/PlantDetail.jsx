@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { db, auth } from '../firebase';
 import { ArrowLeft, Play, Volume2, Bookmark, Share2 } from 'lucide-react';
 import BookmarkButton from '../components/BookmarkButton';
 
@@ -30,6 +30,46 @@ const PlantDetail = () => {
 
         fetchPlant();
     }, [id]);
+
+    // Track plant visit
+    useEffect(() => {
+        const trackVisit = async () => {
+            const user = auth.currentUser;
+            if (!user || !plant) return;
+
+            try {
+                const userRef = doc(db, "Users", user.uid);
+                const userDoc = await getDoc(userRef);
+
+                if (userDoc.exists()) {
+                    const visitHistory = userDoc.data()?.visitHistory || [];
+
+                    // Remove existing visit of this plant (to update timestamp)
+                    const filteredHistory = visitHistory.filter((visit) => visit.plantId !== id);
+
+                    // Create new visit entry
+                    const newVisit = {
+                        plantId: id,
+                        visitedAt: new Date(),
+                        plantName: plant.commonName || 'Unknown Plant',
+                        plantImage: plant.media?.images?.[0] || ''
+                    };
+
+                    // Keep only last 50 visits
+                    const updatedHistory = [newVisit, ...filteredHistory].slice(0, 50);
+
+                    // Update Firestore
+                    await updateDoc(userRef, {
+                        visitHistory: updatedHistory
+                    });
+                }
+            } catch (error) {
+                console.error("Error tracking visit:", error);
+            }
+        };
+
+        trackVisit();
+    }, [plant, id]);
 
     if (loading) return <div className="container section">Loading...</div>;
     if (!plant) return <div className="container section">Plant not found <Link to="/explore">Go back</Link></div>;
