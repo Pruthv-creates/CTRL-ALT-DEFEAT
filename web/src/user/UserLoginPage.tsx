@@ -85,7 +85,7 @@ const UserLoginPage = () => {
       : "Sign in to continue your herbal journey"}
   </p>
 
-                <div className="space-y-20">
+                <div className="space-y-40">
                     {isSignup && (
                         <GlassInput
                             icon={<User size={20} />}
@@ -213,7 +213,7 @@ const GlassInput = ({
 }: GlassInputProps) => (
     <div className="relative">
         {icon && (
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5f6b5b]">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5f6b5b] ">
                 {icon}
             </span>
         )}
@@ -224,7 +224,7 @@ const GlassInput = ({
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             className={`
-w-full rounded-md
+w-full rounded-xl
 bg-white/95 hover:bg-white
 border-2 border-[#bdb8ac]
 ${icon ? 'pl-16' : 'pl-6'} pr-6 py-4
