@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:virtual_herbal_garden/models/plant.dart';
+import 'package:virtual_herbal_garden/pages/plant_details_page.dart';
 
 class GuidedTourDetailPage extends StatefulWidget {
   const GuidedTourDetailPage({super.key});
@@ -96,12 +98,34 @@ class _GuidedTourDetailPageState extends State<GuidedTourDetailPage> {
                       scale = scale.clamp(0.8, 1.0);
 
                       return GestureDetector(
-                        onTap: () {
-                          // Navigate to plant detail page (replace with your route)
-                          Navigator.pushNamed(
+                        onTap: () async {
+                          final plantId = data['plants'][index];
+
+                          final snap = await FirebaseFirestore.instance
+                              .collection('plants')
+                              .doc(plantId)
+                              .get();
+
+                          if (!snap.exists) {
+                            debugPrint("Plant not found: $plantId");
+                            return;
+                          }
+
+                          final plantData = snap.data();
+                          if (plantData == null) {
+                            debugPrint("Plant data null for: $plantId");
+                            return;
+                          }
+
+                          final plant = Plant.fromFirestore(snap.id, plantData);
+
+                          if (!context.mounted) return;
+
+                          Navigator.push(
                             context,
-                            '/plant_detail',
-                            arguments: plants[index],
+                            MaterialPageRoute(
+                              builder: (_) => PlantDetailsPage(plant: plant),
+                            ),
                           );
                         },
                         child: AnimatedContainer(

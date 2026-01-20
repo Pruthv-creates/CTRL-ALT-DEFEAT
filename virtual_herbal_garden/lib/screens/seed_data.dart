@@ -527,6 +527,15 @@ class GuidedTourSeeder {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> seedGuidedTours() async {
+    // 1️⃣ Load all plants and build name → id map
+    final plantSnap = await _firestore.collection('plants').get();
+
+    final Map<String, String> plantNameToId = {
+      for (final doc in plantSnap.docs)
+        (doc.data()['commonName'] as String): doc.id,
+    };
+
+    // 2️⃣ Original tours (names only)
     final tours = {
       "immunity": {
         "title": "Immunity Booster",
@@ -616,16 +625,25 @@ class GuidedTourSeeder {
       },
     };
 
+    // 3️⃣ Seed themes using PLANT IDS
     for (final entry in tours.entries) {
+      final List<String> plantIds = [];
+
+      for (final name in entry.value["plants"] as List<String>) {
+        final id = plantNameToId[name];
+        if (id != null) {
+          plantIds.add(id);
+        } else {
+          print("Warning: Plant name '$name' not found in database.");
+        }
+      }
+
       await _firestore.collection("themes").doc(entry.key).set({
         "title": entry.value["title"],
         "description": entry.value["description"],
-        "plants": entry.value["plants"],
+        "plants": plantIds,
         "createdAt": FieldValue.serverTimestamp(),
       });
     }
   }
 }
-
-
-      
