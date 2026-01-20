@@ -5,6 +5,7 @@ import { db, auth } from '../firebase';
 import { ArrowLeft, Play, Volume2, Bookmark, Share2 } from 'lucide-react';
 import BookmarkButton from '../components/BookmarkButton';
 import PlantModel3D from '../components/PlantModel3D';
+import ImageSlideshow from '../components/ImageSlideshow';
 
 const PlantDetail = () => {
     const { id } = useParams();
@@ -84,7 +85,7 @@ const PlantDetail = () => {
 
             <div className="plant-header" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', marginBottom: '60px' }}>
                 {/* Left: Interactive Plant Explorer (2D/3D Toggle) */}
-                <div style={{ backgroundColor: '#F5F5F5', borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'relative', minHeight: '400px' }}>
+                <div style={{ backgroundColor: '#F5F5F5', borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'relative', minHeight: '500px' }}>
                     {is3DMode ? (
                         // 3D Model View
                         (() => {
@@ -126,100 +127,47 @@ const PlantDetail = () => {
                             );
                         })()
                     ) : (
-                        // 2D Image View
-                        (() => {
-                            // Try to get image from Firestore first, then fallback to assets
-                            let imageUrl = plant.media?.images?.[0];
-
-                            // If no Firestore image, map to local assets
-                            if (!imageUrl) {
-                                const imageMap = {
-                                    'aloe vera': 'aloe1',
-                                    'amla': 'amla1',
-                                    'ashwagandha': 'ashwagandha1',
-                                    'neem': 'neem1',
-                                    'turmeric': 'turmeric1',
-                                    'tulsi': 'tulsi1',
-                                    'ginger': 'ginger1',
-                                    'mint': 'mint1',
-                                    'rose': 'rose1',
-                                    'lemon': 'lemon1',
-                                    'licorice': 'licorice1',
-                                    'calendula': 'calendula1',
-                                    'brahmi': 'brahmi1',
-                                    'guduchi': 'guduchi1',
-                                    'giloy': 'guduchi1',
-                                    'shatavari': 'shatavari1',
-                                    'bhringraj': 'bhringraj1',
-                                    'haritaki': 'haritaki1',
-                                    'arnica': 'arnica1',
-                                    'fennel': 'fennel1',
-                                    'cucumber': 'cucumber1',
-                                    'adhatoda': 'adhatoda1',
-                                    'bala': 'bala1',
-                                    'guggul': 'guggul1',
-                                    'jatamansi': 'jatamansi1',
-                                    'kutki': 'kutki1',
-                                    'manjistha': 'manjistha1',
-                                    'nilavembu': 'nilavembu1',
-                                    'nux vomica': 'nuxvomica1',
-                                    'pippali': 'pippali1',
-                                    'punarnava': 'punarnava1',
-                                    'senna': 'senna1',
-                                    'shankhpushpi': 'shankhpushpi1',
-                                    'thuthuvalai': 'thuthuvalai1',
-                                    'vacha': 'vacha1',
-                                    'vidanga': 'vidanga1'
-                                };
-
-                                const plantNameLower = plant.commonName?.toLowerCase() || '';
-                                const imageName = imageMap[plantNameLower];
-
-                                if (imageName) {
-                                    imageUrl = `../../assets/images/${imageName}.jpg`;
-                                }
-                            }
-
-                            return imageUrl ? (
-                                <img
-                                    src={imageUrl}
-                                    alt={plant.commonName}
-                                    style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '20px' }}
-                                    onError={(e) => {
-                                        // If .jpg fails, try .jpeg
-                                        if (e.target.src.endsWith('.jpg')) {
-                                            e.target.src = e.target.src.replace('.jpg', '.jpeg');
-                                        }
-                                    }}
-                                />
-                            ) : (
-                                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    No Image Available
-                                </div>
-                            );
-                        })()
+                        // 2D Image Slideshow
+                        <ImageSlideshow plantName={plant.commonName} />
                     )}
-                    <div style={{ position: 'absolute', bottom: '20px', left: '20px', display: 'flex', gap: '10px' }}>
+                    <div style={{ position: 'absolute', bottom: '20px', left: '20px', display: 'flex', flexDirection: 'row', gap: '12px', alignItems: 'center' }}>
                         <button
                             onClick={() => setIs3DMode(!is3DMode)}
                             className="btn"
                             style={{
-                                backgroundColor: is3DMode ? 'var(--color-primary)' : 'white',
-                                color: is3DMode ? 'white' : 'var(--color-text-dark)',
-                                fontSize: '0.9rem',
-                                padding: '8px 16px',
-                                fontWeight: '600'
+                                background: ' #689150ff',
+                                color: 'white',
+                                fontSize: '1.1rem',
+                                padding: '12px 24px',
+                                fontWeight: '600',
+                                border: 'none',
+                                borderRadius: '12px',
+                                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4), 0 2px 8px rgba(0,0,0,0.1)',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.target.style.boxShadow = '0 6px 20px rgba(209, 214, 235, 1), 0 4px 12px rgba(0,0,0,0.15)';
+                                e.target.style.transform = 'translateY(-2px)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.boxShadow = '0 4px 15px rgba(235, 236, 240, 0.4), 0 2px 8px rgba(0,0,0,0.1)';
+                                e.target.style.transform = 'translateY(0)';
                             }}
                         >
-                            {is3DMode ? '2D View' : '3D View'}
+                            2D/3D Toggle
                         </button>
                         {is3DMode && (
                             <div style={{
-                                backgroundColor: 'rgba(255,255,255,0.9)',
-                                padding: '8px 12px',
-                                borderRadius: '8px',
-                                fontSize: '0.85rem',
-                                color: '#666'
+                                backgroundColor: 'rgba(255,255,255,0.95)',
+                                padding: '10px 16px',
+                                borderRadius: '10px',
+                                fontSize: '0.9rem',
+                                color: '#4A5568',
+                                fontWeight: '500',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                textAlign: 'center',
+                                whiteSpace: 'nowrap'
                             }}>
                                 Drag to rotate • Scroll to zoom
                             </div>
