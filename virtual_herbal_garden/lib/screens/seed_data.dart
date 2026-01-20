@@ -544,13 +544,7 @@ class SeedDataService {
           "images": ["assets/images/vacha1.jpg", "assets/images/vacha2.jpg"],
           "model3D": "assets/3dModels/vacha.glb"
         }
-      }
-    ];
-        "media": {
-          "images": ["assets/images/rose1.jpg", "assets/images/rose2.jpg"],
-          "model3D": "assets/3dModels/rose.glb"
-        }
-      },
+      },  
       {
         "commonName": "Nux vomica",
         "botanicalName": "Strychnos nux-vomica",
@@ -1024,11 +1018,11 @@ class DescriptionUpdateService {
           'description': description,
         });
 
-        debugPrint('Updated description for: $plantName');
+        print('Updated description for: $plantName');
       }
-      debugPrint('✓ All descriptions updated successfully!');
+      print('✓ All descriptions updated successfully!');
     } catch (e) {
-      debugPrint('Error updating descriptions: $e');
+      print('Error updating descriptions: $e');
     }
   }
 }
