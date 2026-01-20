@@ -132,11 +132,7 @@ const Home = () => {
                 {loading ? (
                     <p>Loading featured plants...</p>
                 ) : (
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                        gap: '30px'
-                    }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {featuredPlants.length > 0 ? (
                             featuredPlants.map((plant) => (
                                 <PlantCard key={plant.id} plant={plant} />

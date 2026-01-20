@@ -233,7 +233,7 @@ const PlantDetail = () => {
 
                     <div style={{ display: 'flex', gap: '15px', marginBottom: '40px' }}>
                         <BookmarkButton plantId={plant.id} />
-                        <button className="btn btn-outline" style={{ gap: '8px' }}>
+                        <button className="btn btn-outline flex flex-row items-center justify-center" style={{ gap: '8px' }}>
                             <Share2 size={18} /> Share
                         </button>
                     </div>

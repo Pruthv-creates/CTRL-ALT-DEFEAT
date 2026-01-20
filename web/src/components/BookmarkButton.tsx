@@ -60,7 +60,7 @@ const BookmarkButton = ({ plantId }: { plantId: string }) => {
         <>
             <Toaster />
             <button
-                className="btn btn-outline"
+                className="btn btn-outline flex flex-row items-center justify-center"
                 style={{ gap: '8px' }}
                 onClick={handleBookmark}
             >
