@@ -2,203 +2,211 @@
   "ginger": {
     "audioFile": "/assets/audio/ginger.mp3",
     "script": "Ginger, scientifically known as Zingiber officinale, is a powerful herb used in Ayurveda, Siddha, and Unani medicine. Its rhizome is valued for anti-inflammatory and digestive properties, effectively relieving nausea, reducing joint pain, and improving digestion.",
-    "generatedAt": "2026-01-20T16:10:02.004Z",
+    "generatedAt": "2026-01-20T16:13:27.310Z",
     "service": "Google Cloud TTS"
   },
   "aloe_vera": {
     "audioFile": "/assets/audio/aloe_vera.mp3",
     "script": "Aloe Vera, or Aloe barbadensis miller, is a cornerstone of Ayurvedic and Siddha medicine. Known for its cooling and anti-inflammatory properties, it soothes skin burns, promotes wound healing, and supports digestive health through its gel-rich leaves.",
-    "generatedAt": "2026-01-20T16:10:03.207Z",
+    "generatedAt": "2026-01-20T16:13:28.084Z",
     "service": "Google Cloud TTS"
   },
   "lemon": {
     "audioFile": "/assets/audio/lemon.mp3",
     "script": "Lemon, Citrus limon, is widely used across Ayurveda, Siddha, and Unani traditions. Rich in antioxidants and vitamin C, it boosts immunity, aids digestion, and helps prevent scurvy. Both the fruit and peel offer therapeutic benefits.",
-    "generatedAt": "2026-01-20T16:10:04.669Z",
+    "generatedAt": "2026-01-20T16:13:30.071Z",
     "service": "Google Cloud TTS"
   },
   "cucumber": {
-    "error": "Google Cloud TTS API error: 403 - {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\",\n    \"status\": \"PERMISSION_DENIED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"SERVICE_DISABLED\",\n        \"domain\": \"googleapis.com\",\n        \"metadata\": {\n          \"serviceTitle\": \"Cloud Text-to-Speech API\",\n          \"containerInfo\": \"1055268052228\",\n          \"consumer\": \"projects/1055268052228\",\n          \"service\": \"texttospeech.googleapis.com\",\n          \"activationUrl\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.LocalizedMessage\",\n        \"locale\": \"en-US\",\n        \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\"\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Google developers console API activation\",\n            \"url\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\"\n          }\n        ]\n      }\n    ]\n  }\n}\n",
-    "script": "Cucumber, Cucumis sativus, is valued in traditional medicine for its cooling and hydrating properties. It helps reduce body heat, soothes skin inflammation, and alleviates acidity, making it an excellent natural remedy for digestive comfort."
+    "audioFile": "/assets/audio/cucumber.mp3",
+    "script": "Cucumber, Cucumis sativus, is valued in traditional medicine for its cooling and hydrating properties. It helps reduce body heat, soothes skin inflammation, and alleviates acidity, making it an excellent natural remedy for digestive comfort.",
+    "generatedAt": "2026-01-20T16:13:31.731Z",
+    "service": "Google Cloud TTS"
   },
   "senna": {
     "audioFile": "/assets/audio/senna.mp3",
     "script": "Senna, or Senna alexandrina, is a powerful natural laxative used in Ayurveda, Siddha, and Unani systems. Its leaves and pods effectively relieve constipation and cleanse the colon, though it should not be used long-term.",
-    "generatedAt": "2026-01-20T16:10:06.121Z",
+    "generatedAt": "2026-01-20T16:13:33.071Z",
     "service": "Google Cloud TTS"
   },
   "licorice": {
-    "error": "Google Cloud TTS API error: 403 - {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\",\n    \"status\": \"PERMISSION_DENIED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"SERVICE_DISABLED\",\n        \"domain\": \"googleapis.com\",\n        \"metadata\": {\n          \"serviceTitle\": \"Cloud Text-to-Speech API\",\n          \"containerInfo\": \"1055268052228\",\n          \"activationUrl\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\",\n          \"consumer\": \"projects/1055268052228\",\n          \"service\": \"texttospeech.googleapis.com\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.LocalizedMessage\",\n        \"locale\": \"en-US\",\n        \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\"\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Google developers console API activation\",\n            \"url\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\"\n          }\n        ]\n      }\n    ]\n  }\n}\n",
-    "script": "Licorice, Glycyrrhiza glabra, is a soothing herb with anti-inflammatory and expectorant properties. Its root is used to relieve coughs, soothe throat irritation, and support digestive health across multiple traditional medicine systems."
+    "audioFile": "/assets/audio/licorice.mp3",
+    "script": "Licorice, Glycyrrhiza glabra, is a soothing herb with anti-inflammatory and expectorant properties. Its root is used to relieve coughs, soothe throat irritation, and support digestive health across multiple traditional medicine systems.",
+    "generatedAt": "2026-01-20T16:13:34.467Z",
+    "service": "Google Cloud TTS"
   },
   "rose": {
-    "error": "Google Cloud TTS API error: 403 - {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\",\n    \"status\": \"PERMISSION_DENIED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"SERVICE_DISABLED\",\n        \"domain\": \"googleapis.com\",\n        \"metadata\": {\n          \"activationUrl\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\",\n          \"service\": \"texttospeech.googleapis.com\",\n          \"serviceTitle\": \"Cloud Text-to-Speech API\",\n          \"containerInfo\": \"1055268052228\",\n          \"consumer\": \"projects/1055268052228\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.LocalizedMessage\",\n        \"locale\": \"en-US\",\n        \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\"\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Google developers console API activation\",\n            \"url\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\"\n          }\n        ]\n      }\n    ]\n  }\n}\n",
-    "script": "Rose, Rosa indica, is cherished in Ayurveda, Siddha, Unani, and Homeopathy for its cooling and anti-inflammatory properties. Its petals soothe skin, reduce stress, and improve digestion, offering both therapeutic and aromatic benefits."
+    "audioFile": "/assets/audio/rose.mp3",
+    "script": "Rose, Rosa indica, is cherished in Ayurveda, Siddha, Unani, and Homeopathy for its cooling and anti-inflammatory properties. Its petals soothe skin, reduce stress, and improve digestion, offering both therapeutic and aromatic benefits.",
+    "generatedAt": "2026-01-20T16:13:35.710Z",
+    "service": "Google Cloud TTS"
   },
   "nux_vomica": {
     "audioFile": "/assets/audio/nux_vomica.mp3",
     "script": "Nux vomica, from Strychnos nux-vomica, is used exclusively in homeopathic preparations. In microdoses, it stimulates digestion and the nervous system. However, the seeds are highly toxic and should never be used except in properly prepared homeopathic form.",
-    "generatedAt": "2026-01-20T16:10:07.176Z",
+    "generatedAt": "2026-01-20T16:13:36.522Z",
     "service": "Google Cloud TTS"
   },
   "calendula": {
     "audioFile": "/assets/audio/calendula.mp3",
     "script": "Calendula, or Calendula officinalis, is renowned for its anti-inflammatory and antimicrobial properties. Its bright flowers promote wound healing, reduce skin inflammation, and fight infections, making it a valuable remedy for skin conditions.",
-    "generatedAt": "2026-01-20T16:10:07.998Z",
+    "generatedAt": "2026-01-20T16:13:37.394Z",
     "service": "Google Cloud TTS"
   },
   "fennel": {
     "audioFile": "/assets/audio/fennel.mp3",
     "script": "Fennel, Foeniculum vulgare, is a digestive powerhouse in traditional medicine. Its seeds contain carminative properties that reduce bloating, relieve gas, and support overall digestive health through their gentle, warming action.",
-    "generatedAt": "2026-01-20T16:10:09.357Z",
+    "generatedAt": "2026-01-20T16:13:38.176Z",
     "service": "Google Cloud TTS"
   },
   "adhatoda": {
     "audioFile": "/assets/audio/adhatoda.mp3",
     "script": "Adhatoda, or Adhatoda vasica, is a respiratory tonic used in Ayurveda, Siddha, and Unani medicine. Its leaves act as an expectorant and bronchodilator, effectively relieving coughs and improving respiratory health.",
-    "generatedAt": "2026-01-20T16:10:10.127Z",
+    "generatedAt": "2026-01-20T16:13:38.968Z",
     "service": "Google Cloud TTS"
   },
   "nilavembu": {
     "audioFile": "/assets/audio/nilavembu.mp3",
     "script": "Nilavembu, Andrographis paniculata, is a powerful immunity booster with anti-malarial properties. Used in Ayurveda, Siddha, and Unani, it prevents malaria, strengthens immune function, and supports liver health.",
-    "generatedAt": "2026-01-20T16:10:10.928Z",
+    "generatedAt": "2026-01-20T16:13:39.744Z",
     "service": "Google Cloud TTS"
   },
   "thuthuvalai": {
     "audioFile": "/assets/audio/thuthuvalai.mp3",
     "script": "Thuthuvalai, Solanum trilobatum, is a respiratory tonic valued in traditional medicine. Its leaves and stem treat coughs, improve lung health, and reduce inflammation, making it especially useful for asthma and respiratory conditions.",
-    "generatedAt": "2026-01-20T16:10:11.719Z",
+    "generatedAt": "2026-01-20T16:13:40.577Z",
     "service": "Google Cloud TTS"
   },
   "arnica": {
     "audioFile": "/assets/audio/arnica.mp3",
     "script": "Arnica montana is a healing herb used in Homeopathy and Ayurveda. Its flowers provide powerful anti-inflammatory and pain-relieving effects, reducing bruises, relieving muscle pain, and promoting wound healing when applied topically.",
-    "generatedAt": "2026-01-20T16:10:13.275Z",
+    "generatedAt": "2026-01-20T16:13:41.388Z",
     "service": "Google Cloud TTS"
   },
   "turmeric": {
-    "error": "Google Cloud TTS API error: 403 - {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\",\n    \"status\": \"PERMISSION_DENIED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"SERVICE_DISABLED\",\n        \"domain\": \"googleapis.com\",\n        \"metadata\": {\n          \"serviceTitle\": \"Cloud Text-to-Speech API\",\n          \"service\": \"texttospeech.googleapis.com\",\n          \"containerInfo\": \"1055268052228\",\n          \"activationUrl\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\",\n          \"consumer\": \"projects/1055268052228\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.LocalizedMessage\",\n        \"locale\": \"en-US\",\n        \"message\": \"Cloud Text-to-Speech API has not been used in project 1055268052228 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\"\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Google developers console API activation\",\n            \"url\": \"https://console.developers.google.com/apis/api/texttospeech.googleapis.com/overview?project=1055268052228\"\n          }\n        ]\n      }\n    ]\n  }\n}\n",
-    "script": "Turmeric, Curcuma longa, is one of the most powerful anti-inflammatory herbs in Ayurveda. Its golden rhizome contains curcumin, which reduces inflammation, supports liver health, boosts immunity, and alleviates joint pain."
+    "audioFile": "/assets/audio/turmeric.mp3",
+    "script": "Turmeric, Curcuma longa, is one of the most powerful anti-inflammatory herbs in Ayurveda. Its golden rhizome contains curcumin, which reduces inflammation, supports liver health, boosts immunity, and alleviates joint pain.",
+    "generatedAt": "2026-01-20T16:13:42.967Z",
+    "service": "Google Cloud TTS"
   },
   "ashwagandha": {
     "audioFile": "/assets/audio/ashwagandha.mp3",
     "script": "Ashwagandha, Withania somnifera, is a renowned adaptogenic herb in Ayurveda and Unani medicine. Its root reduces stress, improves sleep quality, enhances vitality, and strengthens the immune system naturally.",
-    "generatedAt": "2026-01-20T16:10:14.222Z",
+    "generatedAt": "2026-01-20T16:13:43.757Z",
     "service": "Google Cloud TTS"
   },
   "tulsi": {
     "audioFile": "/assets/audio/tulsi.mp3",
     "script": "Tulsi, or Holy Basil, Ocimum sanctum, is a sacred adaptogenic herb in Ayurveda. Its leaves relieve respiratory disorders, reduce stress, boost immunity, and help manage fever through their antimicrobial and anti-inflammatory properties.",
-    "generatedAt": "2026-01-20T16:10:15.044Z",
+    "generatedAt": "2026-01-20T16:13:44.548Z",
     "service": "Google Cloud TTS"
   },
   "neem": {
     "audioFile": "/assets/audio/neem.mp3",
     "script": "Neem, Azadirachta indica, is a powerful blood purifier with antibacterial and antifungal properties. Its leaves, bark, and seeds treat skin conditions, purify blood, control diabetes, and fight various infections.",
-    "generatedAt": "2026-01-20T16:10:16.360Z",
+    "generatedAt": "2026-01-20T16:13:45.321Z",
     "service": "Google Cloud TTS"
   },
   "brahmi": {
     "audioFile": "/assets/audio/brahmi.mp3",
     "script": "Brahmi, Bacopa monnieri, is a renowned nootropic herb in Ayurveda and Siddha medicine. This whole plant enhances memory, reduces anxiety, and improves cognitive function through its neuroprotective properties.",
-    "generatedAt": "2026-01-20T16:10:17.129Z",
+    "generatedAt": "2026-01-20T16:13:46.080Z",
     "service": "Google Cloud TTS"
   },
   "amla": {
     "audioFile": "/assets/audio/amla.mp3",
     "script": "Amla, or Indian Gooseberry, Phyllanthus emblica, is exceptionally rich in vitamin C and antioxidants. This rejuvenating fruit boosts immunity, improves digestion, promotes hair growth, and slows the aging process.",
-    "generatedAt": "2026-01-20T16:10:18.809Z",
+    "generatedAt": "2026-01-20T16:13:46.982Z",
     "service": "Google Cloud TTS"
   },
   "triphala": {
     "audioFile": "/assets/audio/triphala.mp3",
     "script": "Triphala is a classical Ayurvedic formulation combining three fruits: Haritaki, Bibhitaki, and Amla. This powerful blend improves digestion, cleanses the colon, supports eye health, and provides potent antioxidant benefits.",
-    "generatedAt": "2026-01-20T16:10:20.002Z",
+    "generatedAt": "2026-01-20T16:13:48.395Z",
     "service": "Google Cloud TTS"
   },
   "haritaki": {
     "audioFile": "/assets/audio/haritaki.mp3",
     "script": "Haritaki, Terminalia chebula, is a rejuvenating fruit in Ayurveda, Siddha, and Unani medicine. It acts as a gentle laxative, improves digestion, and detoxifies the body, earning it the title of the king of medicines.",
-    "generatedAt": "2026-01-20T16:10:21.199Z",
+    "generatedAt": "2026-01-20T16:13:49.195Z",
     "service": "Google Cloud TTS"
   },
   "guggul": {
     "audioFile": "/assets/audio/guggul.mp3",
     "script": "Guggul, from Commiphora wightii, is a resin valued for its anti-inflammatory and cholesterol-lowering properties. It supports weight management, reduces cholesterol levels, and treats arthritis effectively in Ayurvedic and Unani traditions.",
-    "generatedAt": "2026-01-20T16:10:21.972Z",
+    "generatedAt": "2026-01-20T16:13:49.986Z",
     "service": "Google Cloud TTS"
   },
   "shatavari": {
     "audioFile": "/assets/audio/shatavari.mp3",
     "script": "Shatavari, Asparagus racemosus, is a rejuvenating herb for reproductive health in Ayurveda and Unani medicine. Its root supports hormonal balance, enhances fertility, and increases lactation in nursing mothers.",
-    "generatedAt": "2026-01-20T16:10:22.770Z",
+    "generatedAt": "2026-01-20T16:13:50.736Z",
     "service": "Google Cloud TTS"
   },
   "guduchi": {
     "audioFile": "/assets/audio/guduchi.mp3",
     "script": "Guduchi, or Giloy, Tinospora cordifolia, is a powerful immunomodulator in traditional medicine. Its stem boosts immunity, reduces fever, treats chronic infections, and helps manage diabetes through its antipyretic properties.",
-    "generatedAt": "2026-01-20T16:10:23.536Z",
+    "generatedAt": "2026-01-20T16:13:51.565Z",
     "service": "Google Cloud TTS"
   },
   "bhringraj": {
     "audioFile": "/assets/audio/bhringraj.mp3",
     "script": "Bhringraj, Eclipta alba, is known as the king of hair in Ayurveda and Siddha medicine. Its leaves promote hair growth, support liver health, and enhance memory through their hepatoprotective and nootropic properties.",
-    "generatedAt": "2026-01-20T16:10:24.308Z",
+    "generatedAt": "2026-01-20T16:13:52.329Z",
     "service": "Google Cloud TTS"
   },
   "punarnava": {
     "audioFile": "/assets/audio/punarnava.mp3",
     "script": "Punarnava, Boerhavia diffusa, is a rejuvenating diuretic herb in Ayurveda, Siddha, and Unani medicine. Its root treats kidney disorders, reduces edema, and supports heart health through its anti-inflammatory action.",
-    "generatedAt": "2026-01-20T16:10:25.086Z",
+    "generatedAt": "2026-01-20T16:13:53.124Z",
     "service": "Google Cloud TTS"
   },
   "shankhpushpi": {
     "audioFile": "/assets/audio/shankhpushpi.mp3",
     "script": "Shankhpushpi, Convolvulus pluricaulis, is a powerful brain tonic in Ayurveda. This whole plant enhances memory, reduces stress and anxiety, and improves sleep quality through its nootropic and sedative properties.",
-    "generatedAt": "2026-01-20T16:10:25.952Z",
+    "generatedAt": "2026-01-20T16:13:53.943Z",
     "service": "Google Cloud TTS"
   },
   "manjistha": {
     "audioFile": "/assets/audio/manjistha.mp3",
     "script": "Manjistha, Rubia cordifolia, is a premier blood purifier in Ayurveda and Siddha medicine. Its root treats skin diseases, purifies blood, and promotes wound healing through its anti-inflammatory and antimicrobial properties.",
-    "generatedAt": "2026-01-20T16:10:26.981Z",
+    "generatedAt": "2026-01-20T16:13:54.719Z",
     "service": "Google Cloud TTS"
   },
   "vidanga": {
     "audioFile": "/assets/audio/vidanga.mp3",
     "script": "Vidanga, Embelia ribes, is an anthelmintic herb used in Ayurveda and Siddha medicine. Its fruit removes intestinal worms, improves digestion, and treats skin diseases through its antimicrobial properties.",
-    "generatedAt": "2026-01-20T16:10:27.843Z",
+    "generatedAt": "2026-01-20T16:13:55.667Z",
     "service": "Google Cloud TTS"
   },
   "kutki": {
     "audioFile": "/assets/audio/kutki.mp3",
     "script": "Kutki, Picrorhiza kurroa, is a powerful hepatoprotective herb in Ayurveda and Siddha medicine. Its rhizome supports liver health, treats jaundice, and boosts immunity through its anti-inflammatory properties.",
-    "generatedAt": "2026-01-20T16:10:28.705Z",
+    "generatedAt": "2026-01-20T16:13:56.465Z",
     "service": "Google Cloud TTS"
   },
   "pippali": {
     "audioFile": "/assets/audio/pippali.mp3",
     "script": "Pippali, or Long Pepper, Piper longum, is a bioenhancer in Ayurveda, Siddha, and Unani medicine. Its fruit treats respiratory disorders, improves digestion, and enhances the absorption of other herbs and nutrients.",
-    "generatedAt": "2026-01-20T16:10:29.738Z",
+    "generatedAt": "2026-01-20T16:13:57.407Z",
     "service": "Google Cloud TTS"
   },
   "bala": {
     "audioFile": "/assets/audio/bala.mp3",
     "script": "Bala, Sida cordifolia, is a rejuvenating tonic in Ayurveda and Siddha medicine. Its root and whole plant strengthen muscles, improve stamina, and treat nervous disorders through their nervine and anti-inflammatory properties.",
-    "generatedAt": "2026-01-20T16:10:30.966Z",
+    "generatedAt": "2026-01-20T16:13:58.343Z",
     "service": "Google Cloud TTS"
   },
   "jatamansi": {
     "audioFile": "/assets/audio/jatamansi.mp3",
     "script": "Jatamansi, Nardostachys jatamansi, is a calming herb in Ayurveda and Unani medicine. Its rhizome reduces stress and anxiety, improves sleep quality, and enhances memory through its sedative and neuroprotective properties.",
-    "generatedAt": "2026-01-20T16:10:31.887Z",
+    "generatedAt": "2026-01-20T16:13:59.129Z",
     "service": "Google Cloud TTS"
   },
   "vacha": {
     "audioFile": "/assets/audio/vacha.mp3",
     "script": "Vacha, or Sweet Flag, Acorus calamus, is a powerful nootropic in Ayurveda and Unani medicine. Its rhizome enhances memory, treats epilepsy, and improves speech, though it should be used cautiously and avoided during pregnancy.",
-    "generatedAt": "2026-01-20T16:10:32.650Z",
+    "generatedAt": "2026-01-20T16:13:59.956Z",
     "service": "Google Cloud TTS"
   }
 }
