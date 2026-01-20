@@ -91,12 +91,19 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                /// hero card
+                /// 🌿 HERO CARD
                 Container(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(22),
                   decoration: BoxDecoration(
-                    color: colors.primaryContainer,
-                    borderRadius: BorderRadius.circular(22),
+                    gradient: LinearGradient(
+                      colors: [
+                        colors.primaryContainer,
+                        colors.secondaryContainer,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(26),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,14 +111,14 @@ class _HomePageState extends State<HomePage>
                       Row(
                         children: [
                           Icon(Icons.eco,
-                              size: 36,
+                              size: 38,
                               color: colors.inversePrimary),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               'Virtual Herbal Garden',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 color: colors.inversePrimary,
                               ),
@@ -119,50 +126,28 @@ class _HomePageState extends State<HomePage>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 14),
                       Text(
-                        'Explore medicinal plants used in AYUSH systems through interactive 2D/3D models, curated knowledge, and guided learning.',
+                        'Discover medicinal plants used in AYUSH systems through interactive visuals, curated knowledge, and guided learning paths.',
                         style: TextStyle(
                           fontSize: 15,
-                          color: colors.inversePrimary,
+                          height: 1.4,
+                          color: colors.inversePrimary.withOpacity(0.9),
                         ),
                       ),
                     ],
                   ),
                 ),
 
-                const SizedBox(height: 26),
+                const SizedBox(height: 34),
 
-                ///  SEARCH
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search plants, diseases, or uses',
-                    prefixIcon: const Icon(Icons.search),
-                    filled: true,
-                    fillColor: colors.primary,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  onSubmitted: (query) {
-                    if (query.trim().isEmpty) return;
-                    Navigator.pushNamed(
-                      context,
-                      '/explore_plants',
-                      arguments: query.trim(),
-                    );
-                  },
-                ),
-
-                const SizedBox(height: 32),
-
-                /// FEATURES
+                /// 🚀 PRIMARY ACTIONS
                 Text(
-                  'Explore & Learn',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  'What would you like to do?',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 14),
 
@@ -172,78 +157,106 @@ class _HomePageState extends State<HomePage>
                       context,
                       icon: Icons.local_florist,
                       title: 'Explore Plants',
-                      subtitle: '2D / 3D views',
+                      subtitle: 'Browse the herbal glossary',
                       delay: 0,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/explore_plants');
-                      },
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/explore_plants'),
                     ),
                     _animatedFeatureCard(
                       context,
-                      icon: Icons.map,
-                      title: 'Guided Tours',
-                      subtitle: 'Learn by themes',
+                      icon: Icons.camera_alt,
+                      title: 'Identify Plant',
+                      subtitle: 'AI-based recognition',
                       delay: 120,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/guided_tours');
-                      },
-                    ),
-                    _animatedFeatureCard(
-                      context,
-                      icon: Icons.bookmark,
-                      title: 'Bookmark_',
-                      subtitle: 'Save & revisit',
-                      delay: 240,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/bookmarks_page');
-                      },
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/identify_plant'),
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 36),
+                const SizedBox(height: 18),
+
+                Row(
+                  children: [
+                    _animatedFeatureCard(
+                      context,
+                      icon: Icons.map,
+                      title: 'Guided Tours',
+                      subtitle: 'Learn by health themes',
+                      delay: 240,
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/guided_tours'),
+                    ),
+                    _animatedFeatureCard(
+                      context,
+                      icon: Icons.bookmark,
+                      title: 'Bookmarks',
+                      subtitle: 'Saved plants',
+                      delay: 360,
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/bookmarks_page'),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 42),
 
                 /// 🌱 THEMES
                 Text(
                   'Start with a Health Theme',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Curated collections of plants for focused learning',
+                  'Curated plant collections for focused learning',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 16),
 
                 Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: List.generate(
-                    themes.length,
-                    (index) => TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0, end: 1),
-                      duration:
-                          Duration(milliseconds: 400 + index * 120),
-                      builder: (context, value, child) {
-                        return Opacity(
-                          opacity: value,
-                          child: Transform.translate(
-                            offset: Offset(0, 12 * (1 - value)),
-                            child: child,
-                          ),
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: themes.map((theme) {
+                    return ActionChip(
+                      elevation: 3,
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      label: Text(theme),
+                      backgroundColor: colors.secondaryContainer,
+                      labelStyle:
+                          TextStyle(color: colors.onSecondaryContainer),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/explore_plants',
+                          arguments: theme,
                         );
                       },
-                      child: _themeChip(context, themes[index]),
-                    ),
-                  ),
+                    );
+                  }).toList(),
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 36),
 
-                /// ⚠️ ADMIN
-                ElevatedButton(
+                /// ⚠️ ADMIN (VISUALLY SEPARATED)
+                Divider(color: colors.outline.withOpacity(0.4)),
+                const SizedBox(height: 10),
+
+                Text(
+                  'Admin Tools',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 10),
+
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.cloud_upload),
+                  label: const Text('Seed Plants'),
                   onPressed: () async {
                     await SeedDataService().addPlants();
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -251,17 +264,19 @@ class _HomePageState extends State<HomePage>
                           content: Text('Plants added to Firestore')),
                     );
                   },
-                  child: const Text('Seed Plants (Admin)'),
                 ),
-                ElevatedButton(
+                const SizedBox(height: 10),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.route),
+                  label: const Text('Seed Guided Tours'),
                   onPressed: () async {
                     await GuidedTourSeeder().seedGuidedTours();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Guided Tours Seeded")),
+                      const SnackBar(
+                          content: Text("Guided Tours Seeded")),
                     );
                   },
-                  child: const Text("Seed Guided Tours (Admin)"),
-                )
+                ),
               ],
             ),
           ),
