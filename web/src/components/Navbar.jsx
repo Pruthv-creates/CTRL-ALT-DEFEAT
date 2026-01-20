@@ -44,8 +44,8 @@ const Navbar = () => {
                         <Leaf size={24} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span style={{ fontWeight: '800', fontSize: '1.2rem', color: 'var(--color-primary)', lineHeight: '1' }}>VIRTUAL</span>
-                        <span style={{ fontWeight: '600', fontSize: '0.9rem', color: 'var(--color-text-light)', letterSpacing: '1px' }}>HERBAL GARDEN</span>
+                        <span style={{ fontWeight: '800', fontSize: '1.2rem', color: 'var(--color-primary)', lineHeight: '1' }}>वनRealm</span>
+                        <span style={{ fontWeight: '600', fontSize: '0.75rem', color: 'var(--color-text-light)', letterSpacing: '0.5px' }}>A forest of wisdom</span>
                     </div>
                 </Link>
 

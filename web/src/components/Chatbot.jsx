@@ -165,7 +165,7 @@ const Chatbot = () => {
         }}
       >
         <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '600', color: '#ffffff' }}>
-          🌿 Herbal Guide Chatbot
+          🌿 Herbal Guide
         </h3>
         <button
           onClick={() => setIsOpen(false)}

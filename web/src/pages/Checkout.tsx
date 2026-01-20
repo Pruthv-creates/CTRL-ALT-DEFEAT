@@ -65,7 +65,7 @@ const Checkout = () => {
     const generateUpiLink = () => {
         const params = new URLSearchParams({
             pa: upiId,
-            pn: 'Virtual Herbal Garden',
+            pn: 'वनRealm',
             am: total.toFixed(2),
             cu: 'INR',
             tn: `Order Payment - ${orderId}`

@@ -45,7 +45,7 @@ export const categoryMap = {
 
 // Chatbot responses
 export const chatbotResponses = {
-  'greeting': 'Hello! 👋 Welcome to the Virtual Herbal Garden Chatbot. I\'m here to help you find the perfect medicinal plants for your needs.',
+  'greeting': 'Hello! 👋 Welcome to वनRealm. I\'m here to help you find the perfect medicinal plants for your needs.',
   'intro': 'I can help you find plants that support:\n• Digestive health\n• Immunity\n• Respiratory health\n• Stress relief\n• Skin health\n• Joint pain relief\n• Nausea relief\n\nPlease tell me about your health concern or dietary need.',
   'not_understood': 'I didn\'t quite understand that. Could you tell me more about your health concern? For example, are you looking for help with digestion, immunity, stress, skin health, or something else?',
   'found_plants': 'Great! I\'ve found some plants that can help with your concern. Below are the recommended plants:',

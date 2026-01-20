@@ -40,7 +40,7 @@ const UserLoginPage = () => {
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
-      navigate("/user-dashboard");
+      navigate("/");
     } catch {
       setError("Authentication failed. Please try again.");
     }

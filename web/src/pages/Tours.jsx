@@ -12,7 +12,7 @@ const Tours = () => {
             duration: "15 mins",
             icon: <Shield size={40} color="#556B2F" />,
             color: "#E8F5E9",
-            image: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            image: "/images/tours/immunity-booster.jpg"
         },
         {
             id: 2,
@@ -22,7 +22,7 @@ const Tours = () => {
             duration: "12 mins",
             icon: <Sparkles size={40} color="#D35400" />,
             color: "#FFF3E0",
-            image: "https://images.unsplash.com/photo-1606923829579-0cb90f3d9dd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            image: "/images/tours/digestive-health.jpg"
         },
         {
             id: 3,
@@ -32,7 +32,7 @@ const Tours = () => {
             duration: "10 mins",
             icon: <Brain size={40} color="#6A4C93" />,
             color: "#F3E5F5",
-            image: "https://images.unsplash.com/photo-1520262454473-a1a82276a574?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            image: "/images/tours/stress-relief.jpg"
         }
     ];
 

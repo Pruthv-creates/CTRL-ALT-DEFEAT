@@ -55,11 +55,12 @@ const Home = () => {
                 marginBottom: '60px'
             }}>
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-                    <h1 style={{ color: 'white', marginBottom: '20px', fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
-                        Virtual Herbal Garden
+                    <h1 style={{ color: 'white', marginBottom: '20px', textShadow: '0 2px 4px rgba(0,0,0,0.3)', display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '4rem', fontWeight: '400' }}>वन</span>
+                        <span style={{ fontSize: '3.5rem', fontWeight: '400' }}>Realm</span>
                     </h1>
                     <p style={{ fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto 40px', lineHeight: '1.6' }}>
-                        Explore medicinal plants used in AYUSH systems. Empowering you with traditional knowledge through technology.
+                        A forest of wisdom, alive in the digital realm. Explore medicinal plants used in AYUSH systems.
                     </p>
                     <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
                         <Link to="/explore" className="btn btn-primary" style={{ backgroundColor: 'var(--color-primary)', border: 'none' }}>
