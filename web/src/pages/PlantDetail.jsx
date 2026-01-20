@@ -4,12 +4,14 @@ import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firest
 import { db, auth } from '../firebase';
 import { ArrowLeft, Play, Volume2, Bookmark, Share2 } from 'lucide-react';
 import BookmarkButton from '../components/BookmarkButton';
+import PlantModel3D from '../components/PlantModel3D';
 
 const PlantDetail = () => {
     const { id } = useParams();
     const [plant, setPlant] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('description');
+    const [is3DMode, setIs3DMode] = useState(false);
 
     useEffect(() => {
         const fetchPlant = async () => {
@@ -81,22 +83,147 @@ const PlantDetail = () => {
             </Link>
 
             <div className="plant-header" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', marginBottom: '60px' }}>
-                {/* Left: Interactive Plant Explorer (Image Placeholder) */}
+                {/* Left: Interactive Plant Explorer (2D/3D Toggle) */}
                 <div style={{ backgroundColor: '#F5F5F5', borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'relative', minHeight: '400px' }}>
-                    {plant.media?.images?.[0] ? (
-                        <img
-                            src={plant.media.images[0]}
-                            alt={plant.commonName}
-                            style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '20px' }}
-                        />
+                    {is3DMode ? (
+                        // 3D Model View
+                        (() => {
+                            // Map plant common names to 3D model filenames
+                            const modelMap = {
+                                'aloe vera': 'aloe',
+                                'amla': 'amla',
+                                'ashwagandha': 'ashwagandha',
+                                'neem': 'neem',
+                                'turmeric': 'turmeric',
+                                'tulsi': 'tulsi',
+                                'ginger': 'ginger',
+                                'mint': 'mint',
+                                'rose': 'rose',
+                                'lemon': 'lemon',
+                                'licorice': 'licorice',
+                                'calendula': 'calendula',
+                                'giloy': 'giloy',
+                                'guduchi': 'giloy'
+                            };
+
+                            const plantNameLower = plant.commonName?.toLowerCase() || '';
+                            const modelName = modelMap[plantNameLower];
+                            const modelPath = modelName ? `/assets/3dModels/${modelName}.glb` : null;
+
+                            return modelPath ? (
+                                <PlantModel3D modelPath={modelPath} />
+                            ) : (
+                                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '10px' }}>
+                                    <p style={{ color: '#666' }}>3D Model not available for this plant</p>
+                                    <button
+                                        onClick={() => setIs3DMode(false)}
+                                        className="btn btn-outline"
+                                        style={{ fontSize: '0.9rem', padding: '8px 16px' }}
+                                    >
+                                        View 2D Images
+                                    </button>
+                                </div>
+                            );
+                        })()
                     ) : (
-                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            No 3D Model/Image Available
-                        </div>
+                        // 2D Image View
+                        (() => {
+                            // Try to get image from Firestore first, then fallback to assets
+                            let imageUrl = plant.media?.images?.[0];
+
+                            // If no Firestore image, map to local assets
+                            if (!imageUrl) {
+                                const imageMap = {
+                                    'aloe vera': 'aloe1',
+                                    'amla': 'amla1',
+                                    'ashwagandha': 'ashwagandha1',
+                                    'neem': 'neem1',
+                                    'turmeric': 'turmeric1',
+                                    'tulsi': 'tulsi1',
+                                    'ginger': 'ginger1',
+                                    'mint': 'mint1',
+                                    'rose': 'rose1',
+                                    'lemon': 'lemon1',
+                                    'licorice': 'licorice1',
+                                    'calendula': 'calendula1',
+                                    'brahmi': 'brahmi1',
+                                    'guduchi': 'guduchi1',
+                                    'giloy': 'guduchi1',
+                                    'shatavari': 'shatavari1',
+                                    'bhringraj': 'bhringraj1',
+                                    'haritaki': 'haritaki1',
+                                    'arnica': 'arnica1',
+                                    'fennel': 'fennel1',
+                                    'cucumber': 'cucumber1',
+                                    'adhatoda': 'adhatoda1',
+                                    'bala': 'bala1',
+                                    'guggul': 'guggul1',
+                                    'jatamansi': 'jatamansi1',
+                                    'kutki': 'kutki1',
+                                    'manjistha': 'manjistha1',
+                                    'nilavembu': 'nilavembu1',
+                                    'nux vomica': 'nuxvomica1',
+                                    'pippali': 'pippali1',
+                                    'punarnava': 'punarnava1',
+                                    'senna': 'senna1',
+                                    'shankhpushpi': 'shankhpushpi1',
+                                    'thuthuvalai': 'thuthuvalai1',
+                                    'vacha': 'vacha1',
+                                    'vidanga': 'vidanga1'
+                                };
+
+                                const plantNameLower = plant.commonName?.toLowerCase() || '';
+                                const imageName = imageMap[plantNameLower];
+
+                                if (imageName) {
+                                    imageUrl = `../../assets/images/${imageName}.jpg`;
+                                }
+                            }
+
+                            return imageUrl ? (
+                                <img
+                                    src={imageUrl}
+                                    alt={plant.commonName}
+                                    style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '20px' }}
+                                    onError={(e) => {
+                                        // If .jpg fails, try .jpeg
+                                        if (e.target.src.endsWith('.jpg')) {
+                                            e.target.src = e.target.src.replace('.jpg', '.jpeg');
+                                        }
+                                    }}
+                                />
+                            ) : (
+                                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    No Image Available
+                                </div>
+                            );
+                        })()
                     )}
                     <div style={{ position: 'absolute', bottom: '20px', left: '20px', display: 'flex', gap: '10px' }}>
-                        <button className="btn btn-primary" style={{ fontSize: '0.9rem', padding: '8px 16px' }}>Zoom & Rotate</button>
-                        <button className="btn" style={{ backgroundColor: 'white', fontSize: '0.9rem', padding: '8px 16px' }}>2D/3D Toggle</button>
+                        <button
+                            onClick={() => setIs3DMode(!is3DMode)}
+                            className="btn"
+                            style={{
+                                backgroundColor: is3DMode ? 'var(--color-primary)' : 'white',
+                                color: is3DMode ? 'white' : 'var(--color-text-dark)',
+                                fontSize: '0.9rem',
+                                padding: '8px 16px',
+                                fontWeight: '600'
+                            }}
+                        >
+                            {is3DMode ? '2D View' : '3D View'}
+                        </button>
+                        {is3DMode && (
+                            <div style={{
+                                backgroundColor: 'rgba(255,255,255,0.9)',
+                                padding: '8px 12px',
+                                borderRadius: '8px',
+                                fontSize: '0.85rem',
+                                color: '#666'
+                            }}>
+                                Drag to rotate • Scroll to zoom
+                            </div>
+                        )}
                     </div>
                 </div>
 
