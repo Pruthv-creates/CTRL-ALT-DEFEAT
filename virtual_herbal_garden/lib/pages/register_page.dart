@@ -102,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               /// App Title
               const Text(
-                "Virtual Herbal Garden",
+                " वन Realm",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,

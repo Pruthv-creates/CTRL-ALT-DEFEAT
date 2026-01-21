@@ -32,9 +32,9 @@ class MyDrawer extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    'Virtual Herbal Garden',
+                    'वन Realm',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: colors.inversePrimary,
                     ),

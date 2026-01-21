@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
 
               /// App Title
               const Text(
-                "Virtual Herbal Garden",
+                " वन Realm",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,

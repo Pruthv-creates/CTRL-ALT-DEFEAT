@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage>
       appBar: AppBar(
         backgroundColor: colors.primary,
         title: const Text(
-          'Virtual Herbal Garden',
+          'वन Realm',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
         centerTitle: true,
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage>
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Virtual Herbal Garden',
+                              ' वन Realm',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,

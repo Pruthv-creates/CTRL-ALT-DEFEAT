@@ -12,7 +12,7 @@ class PlantListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Virtual Herbal Garden')),
+      appBar: AppBar(title: const Text(' वन Realm')),
       body: FutureBuilder<List<Plant>>(
         future: _service.getPlants(),
         builder: (context, snapshot) {
