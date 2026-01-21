@@ -1,0 +1,126 @@
+/* Page background */
+.admin-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #064e3b, #022c22, #000);
+  padding: 24px;
+}
+
+/* Container */
+.admin-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Card */
+.admin-card {
+  position: relative;
+  padding: 40px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 60px rgba(16, 185, 129, 0.25);
+  color: white;
+}
+
+/* Glow overlay */
+.admin-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), transparent);
+  pointer-events: none;
+}
+
+/* Header */
+.admin-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.admin-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.admin-header p {
+  font-size: 14px;
+  color: rgba(167, 243, 208, 0.8);
+}
+
+/* Form */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.admin-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.admin-form input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.admin-form input:focus {
+  border-color: #34d399;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+}
+
+/* Error */
+.admin-error {
+  font-size: 13px;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+/* Button */
+.admin-btn {
+  margin-top: 40px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 15px;
+  color: white;
+  background: linear-gradient(135deg, #10b981, #22c55e);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.45);
+}
+
+.admin-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(16, 185, 129, 0.6);
+}
+
+.admin-btn:active {
+  transform: scale(0.97);
+}
+
+/* Footer */
+.admin-footer {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}

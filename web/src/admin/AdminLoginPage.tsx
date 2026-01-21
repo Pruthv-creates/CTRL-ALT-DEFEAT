@@ -4,6 +4,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
+import "./AdminLoginPage.css";
+
 const AdminLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,44 +43,52 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-100 via-white to-green-100">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white shadow-md rounded-md p-8 space-y-6"
-      >
-        <h2 className="text-2xl font-bold text-center text-gray-800">
-          Admin Login
-        </h2>
+  <div className="admin-page">
+    <div className="admin-container">
+      <form className="admin-card" onSubmit={handleSubmit}>
+        {/* Glow layer */}
+        <div className="admin-glow" />
 
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Admin Email"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          required
-        />
+        {/* Header */}
+        <div className="admin-header">
+          <h2>Admin Access</h2>
+          <p>Secure administrator portal</p>
+        </div>
 
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          required
-        />
+        {/* Inputs */}
+        <div className="admin-form">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Admin Email"
+            required
+          />
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
 
-        <button
-          type="submit"
-          className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition"
-        >
-          Log In
+          {error && <p className="admin-error">{error}</p>}
+        </div>
+
+        {/* Button */}
+        <button type="submit" className="admin-btn">
+          Sign In
         </button>
+
+        {/* Footer */}
+        <div className="admin-footer">
+          <p>Administrator accounts are provisioned manually</p>
+        </div>
       </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default AdminLoginPage;
