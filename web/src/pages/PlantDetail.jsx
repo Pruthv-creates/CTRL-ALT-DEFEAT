@@ -151,7 +151,7 @@ const PlantDetail = () => {
 
                             const plantNameLower = plant.commonName?.toLowerCase() || '';
                             const modelName = modelMap[plantNameLower];
-                            const modelPath = modelName ? `/assets/3dModels/${modelName}.glb` : null;
+                            const modelPath = modelName ? `/models/${modelName}.glb` : null;
 
                             return modelPath ? (
                                 <PlantModel3D modelPath={modelPath} />
